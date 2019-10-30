@@ -2,6 +2,8 @@ package graeme.hosford.rob.morgan.assignment2.data.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Job")
@@ -19,6 +21,10 @@ public class Job {
 
     @Column(name = "JobPublishedDate", nullable = false)
     private LocalDate jobPublishedDate;
+
+    @JoinTable
+    @OneToMany
+    private List<Bid> jobBids = new ArrayList<>();
 
     public long getJobId() {
         return jobId;

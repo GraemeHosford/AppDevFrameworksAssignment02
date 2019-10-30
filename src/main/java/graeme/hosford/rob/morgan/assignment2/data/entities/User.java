@@ -1,6 +1,8 @@
 package graeme.hosford.rob.morgan.assignment2.data.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -21,6 +23,14 @@ public class User {
 
     @Column(name = "UserPassword", nullable = false)
     private String userPassword;
+
+    @JoinTable
+    @OneToMany
+    private List<Job> userJobs = new ArrayList<>();
+
+    @JoinTable
+    @OneToMany
+    private List<Bid> userBids = new ArrayList<>();
 
     public User() {
     }
