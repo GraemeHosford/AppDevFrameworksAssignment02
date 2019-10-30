@@ -22,7 +22,10 @@ public class BeanConfig {
     public DataSource jdbcDatasource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
-                .addScripts("schema.sql")
+                .addScripts("schema.sql"
+                        /* Can't add data.sql here yet because H2 shits the
+                        bed when its used with JPA for some reason */
+                )
                 .build();
     }
 
