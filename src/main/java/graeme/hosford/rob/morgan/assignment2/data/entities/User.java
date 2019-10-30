@@ -1,4 +1,4 @@
-package graeme.hosford.rob.morgan.assignment2.entities;
+package graeme.hosford.rob.morgan.assignment2.data.entities;
 
 import javax.persistence.*;
 
@@ -10,17 +10,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-    @Column(name = "UserName")
+    @Column(name = "UserName", nullable = false)
     private String userName;
 
-    @Column(name = "UserPhone")
+    @Column(name = "UserPhone", nullable = false)
     private String userPhone;
 
-    @Column(name = "UserEmail")
+    @Column(name = "UserEmail", nullable = false)
     private String userEmail;
 
-    @Column(name = "UserPassword")
+    @Column(name = "UserPassword", nullable = false)
     private String userPassword;
+
+    public User() {
+    }
+
+    public User(String userName, String userPhone, String userEmail, String userPassword) {
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+    }
 
     public long getUserId() {
         return userId;
