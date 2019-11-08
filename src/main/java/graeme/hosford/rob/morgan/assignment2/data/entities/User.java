@@ -24,12 +24,10 @@ public class User {
     @Column(name = "UserPassword", nullable = false)
     private String userPassword;
 
-    @JoinTable
     @OneToMany
     private List<Job> userJobs = new ArrayList<>();
 
-    @JoinTable
-    @OneToMany
+    @OneToMany(mappedBy = "bidId", fetch = FetchType.EAGER)
     private List<Bid> userBids = new ArrayList<>();
 
     public User() {
@@ -40,6 +38,10 @@ public class User {
         this.userPhone = userPhone;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
+    }
+
+    public void addJob(Job job) {
+        userJobs.add(job);
     }
 
     public long getUserId() {
@@ -80,5 +82,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public List<Bid> getUserBids() {
+        return userBids;
+    }
+
+    public void setUserBids(List<Bid> userBids) {
+        this.userBids = userBids;
     }
 }

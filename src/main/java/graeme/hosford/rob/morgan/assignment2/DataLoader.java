@@ -1,0 +1,47 @@
+package graeme.hosford.rob.morgan.assignment2;
+
+import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
+import graeme.hosford.rob.morgan.assignment2.data.entities.User;
+import graeme.hosford.rob.morgan.assignment2.service.BidService;
+import graeme.hosford.rob.morgan.assignment2.service.JobService;
+import graeme.hosford.rob.morgan.assignment2.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+
+@Component
+public class DataLoader implements ApplicationRunner {
+
+    private BidService bidService;
+    private JobService jobService;
+    private UserService userService;
+
+    @Autowired
+    public DataLoader(BidService bidService, JobService jobService, UserService userService) {
+        this.bidService = bidService;
+        this.jobService = jobService;
+        this.userService = userService;
+    }
+
+    @Override
+    public void run(ApplicationArguments args) {
+        User user1 = new User("Graeme Hosford", "0852336922", "graeme.hosford@mycit.ie", "SomePassword");
+        User user2 = new User("Robert Morgan", "0873755491", "rob.morgan@mycit.ie", "Password1");
+        User user3 = new User("John Smith", "0856671935", "j.smith@gmail.com", "JohnSmithPassword");
+
+        userService.save(user1, user2, user3);
+
+        Job job1 = new Job("Fix kitchen", "Kitchen needs fixing", LocalDate.now(), true);
+        Job job2 = new Job("Tile bathroom", "tile the bathroom", LocalDate.of(2019, 9, 23), false);
+        Job job3 = new Job("DO some other thing", "Default job", LocalDate.now(), true);
+
+        user1.addJob(job1);
+        user2.addJob(job2);
+        user3.addJob(job3);
+
+        jobService.save(job1, job2, job3);
+    }
+}

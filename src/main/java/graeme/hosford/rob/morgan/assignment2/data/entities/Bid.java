@@ -1,6 +1,8 @@
 package graeme.hosford.rob.morgan.assignment2.data.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Bid")
@@ -12,6 +14,12 @@ public class Bid {
 
     @Column(name = "BidAmount", nullable = false)
     private double bidAmount;
+
+    @ManyToOne
+    List<User> userBids = new ArrayList<>();
+
+    public Bid() {
+    }
 
     public long getBidId() {
         return bidId;

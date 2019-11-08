@@ -22,6 +22,19 @@ public class Job {
     @Column(name = "JobPublishedDate", nullable = false)
     private LocalDate jobPublishedDate;
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
+    public Job() {
+    }
+
+    public Job(String jobName, String jobDescription, LocalDate jobPublishedDate, boolean active) {
+        this.jobName = jobName;
+        this.jobDescription = jobDescription;
+        this.jobPublishedDate = jobPublishedDate;
+        this.active = active;
+    }
+
     @JoinTable
     @OneToMany
     private List<Bid> jobBids = new ArrayList<>();
@@ -56,5 +69,13 @@ public class Job {
 
     public void setJobPublishedDate(LocalDate jobPublishedDate) {
         this.jobPublishedDate = jobPublishedDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

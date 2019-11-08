@@ -3,7 +3,11 @@ package graeme.hosford.rob.morgan.assignment2.service;
 import graeme.hosford.rob.morgan.assignment2.data.dao.JobDAO;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobService {
 
     @Autowired
@@ -14,5 +18,17 @@ public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobServi
     @Override
     public Job getJobById(long jobId) {
         return getEntityById(jobId);
+    }
+
+    @Override
+    public List<Job> getActiveJobs() {
+        return dao.getJobByActive(true);
+    }
+
+    @Override
+    public void save(Job... jobs) {
+        for (Job j : jobs) {
+            saveEntity(j);
+        }
     }
 }
