@@ -27,7 +27,7 @@ public class User {
     @OneToMany
     private List<Job> userJobs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bidId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Bid> userBids = new ArrayList<>();
 
     public User() {

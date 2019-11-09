@@ -32,8 +32,15 @@ abstract class BaseService<DAO extends JpaRepository<Entity, Long>, Entity> {
         return dao.existsById(id);
     }
 
-    void saveEntity(Entity entity) {
+    private void saveEntity(Entity entity) {
         dao.save(entity);
+    }
+
+    @SafeVarargs
+    final void saveEntities(Entity... entities) {
+        for (Entity e : entities) {
+            saveEntity(e);
+        }
     }
 
     List<Entity> getAllEntities() {

@@ -1,5 +1,6 @@
 package graeme.hosford.rob.morgan.assignment2;
 
+import graeme.hosford.rob.morgan.assignment2.data.entities.Bid;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.BidService;
@@ -43,5 +44,12 @@ public class DataLoader implements ApplicationRunner {
         user3.addJob(job3);
 
         jobService.save(job1, job2, job3);
+
+        Bid bid1 = new Bid(200.0, user1);
+        Bid bid2 = new Bid(134.34, user2);
+        Bid bid3 = new Bid(76.18, user3);
+
+        bidService.save(bid1, bid2, bid3);
+
     }
 }

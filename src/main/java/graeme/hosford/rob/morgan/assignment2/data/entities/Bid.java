@@ -1,8 +1,8 @@
 package graeme.hosford.rob.morgan.assignment2.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "Bid")
@@ -16,9 +16,16 @@ public class Bid {
     private double bidAmount;
 
     @ManyToOne
-    List<User> userBids = new ArrayList<>();
+    @JoinColumn(nullable = false)
+    @JsonIgnore
+    private User user;
 
     public Bid() {
+    }
+
+    public Bid(double bidAmount, User user) {
+        this.bidAmount = bidAmount;
+        this.user = user;
     }
 
     public long getBidId() {
@@ -35,5 +42,13 @@ public class Bid {
 
     public void setBidAmount(double bidAmount) {
         this.bidAmount = bidAmount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

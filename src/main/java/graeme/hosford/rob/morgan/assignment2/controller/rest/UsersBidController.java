@@ -1,6 +1,6 @@
 package graeme.hosford.rob.morgan.assignment2.controller.rest;
 
-import graeme.hosford.rob.morgan.assignment2.data.dao.UserDAO;
+import graeme.hosford.rob.morgan.assignment2.data.dao.BidDAO;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Bid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +14,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class UsersBidController {
 
-    private UserDAO userDAO;
+    private BidDAO bidDAO;
 
     @Autowired
-    public UsersBidController(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UsersBidController(BidDAO bidDAO) {
+        this.bidDAO = bidDAO;
     }
 
     @GetMapping("userbid/{id}")
-    public List<Bid> getUserBids(@PathVariable(name = "id") long userId) {
-        return userDAO.getUserBids(userId);
+    public List<Bid> getUserBids(@PathVariable("id") long userId) {
+        return bidDAO.getUserBids(userId);
     }
 
 }

@@ -27,8 +27,6 @@ public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobServi
 
     @Override
     public void save(Job... jobs) {
-        for (Job j : jobs) {
-            saveEntity(j);
-        }
+        saveEntities(jobs);
     }
 }

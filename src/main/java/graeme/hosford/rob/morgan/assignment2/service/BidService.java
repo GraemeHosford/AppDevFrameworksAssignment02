@@ -8,4 +8,6 @@ public interface BidService {
 
     Bid getBidById(long bidId);
 
+    void save(Bid... bids);
+
 }

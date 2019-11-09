@@ -20,8 +20,6 @@ public class UserServiceImpl extends BaseService<UserDAO, User> implements UserS
 
     @Override
     public void save(User... users) {
-        for (User u : users) {
-            saveEntity(u);
-        }
+        saveEntities(users);
     }
 }

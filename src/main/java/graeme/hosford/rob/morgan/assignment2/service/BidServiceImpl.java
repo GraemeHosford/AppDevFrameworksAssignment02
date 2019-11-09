@@ -17,4 +17,9 @@ public class BidServiceImpl extends BaseService<BidDAO, Bid> implements BidServi
     public Bid getBidById(long bidId) {
         return getEntityById(bidId);
     }
+
+    @Override
+    public void save(Bid... bids) {
+        saveEntities(bids);
+    }
 }
