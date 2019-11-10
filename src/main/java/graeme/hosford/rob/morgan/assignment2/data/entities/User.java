@@ -24,9 +24,6 @@ public class User {
     @Column(name = "UserPassword", nullable = false)
     private String userPassword;
 
-    @OneToMany
-    private List<Job> userJobs = new ArrayList<>();
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Bid> userBids = new ArrayList<>();
 
@@ -38,10 +35,6 @@ public class User {
         this.userPhone = userPhone;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
-    }
-
-    public void addJob(Job job) {
-        userJobs.add(job);
     }
 
     public long getUserId() {
@@ -91,4 +84,5 @@ public class User {
     public void setUserBids(List<Bid> userBids) {
         this.userBids = userBids;
     }
+
 }

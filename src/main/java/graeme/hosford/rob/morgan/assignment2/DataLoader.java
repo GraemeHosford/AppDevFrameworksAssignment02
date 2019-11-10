@@ -39,10 +39,6 @@ public class DataLoader implements ApplicationRunner {
         Job job2 = new Job("Tile bathroom", "tile the bathroom", LocalDate.of(2019, 9, 23), false);
         Job job3 = new Job("DO some other thing", "Default job", LocalDate.now(), true);
 
-        user1.addJob(job1);
-        user2.addJob(job2);
-        user3.addJob(job3);
-
         jobService.save(job1, job2, job3);
 
         Bid bid1 = new Bid(200.0, user1);

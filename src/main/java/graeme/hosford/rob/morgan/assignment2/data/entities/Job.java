@@ -2,8 +2,6 @@ package graeme.hosford.rob.morgan.assignment2.data.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "Job")
@@ -34,10 +32,6 @@ public class Job {
         this.jobPublishedDate = jobPublishedDate;
         this.active = active;
     }
-
-    @JoinTable
-    @OneToMany
-    private List<Bid> jobBids = new ArrayList<>();
 
     public long getJobId() {
         return jobId;
@@ -78,4 +72,5 @@ public class Job {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }
