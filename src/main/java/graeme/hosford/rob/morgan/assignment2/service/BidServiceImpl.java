@@ -19,6 +19,19 @@ public class BidServiceImpl extends BaseService<BidDAO, Bid> implements BidServi
     }
 
     @Override
+    public boolean makeBid(long bidId, double bidAmount) {
+        Bid bid = getEntityById(bidId);
+
+        if (bidAmount < bid.getBidAmount()) {
+            bid.setBidAmount(bidAmount);
+            save(bid);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public void save(Bid... bids) {
         saveEntities(bids);
     }

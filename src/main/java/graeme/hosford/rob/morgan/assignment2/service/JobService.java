@@ -10,6 +10,8 @@ public interface JobService {
 
     List<Job> getActiveJobs();
 
+    List<Job> getAllJobs();
+
     void save(Job... jobs);
 
 }
