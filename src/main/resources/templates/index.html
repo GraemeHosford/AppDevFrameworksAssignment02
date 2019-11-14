@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Assignment 02 Project</title>
 </head>
 <body>
-<p>Some placeholder text</p>
+<a href="/register">Register</a>
+<a href="/login">Login</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Job</th>
+        <th>Description</th>
+        <th>Publsished Date</th>
+        <th>Job Active</th>
+    </tr>
+
+    <tr th:each="job : ${jobList}">
+        <td th:text="*{job.jobId}">1</td>
+        <td th:text="*{job.jobName}">Job</td>
+        <td th:text="*{job.jobDescription}">Job Description</td>
+        <td th:text="*{job.jobPublishedDate}">Published Date</td>
+        <td th:if="*{job.active}">
+            <a th:href="@{/makebid/${job.jobId}}">Make Bid</a>
+        </td>
+        <td th:unless="*{job.active}">
+            <a>Job is out of date</a>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
