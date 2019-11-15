@@ -24,6 +24,9 @@ public class User {
     @Column(name = "UserPassword", nullable = false)
     private String userPassword;
 
+    @OneToMany(mappedBy = "userRef", fetch = FetchType.EAGER)
+    private List<Job> userJobs = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Bid> userBids = new ArrayList<>();
 
@@ -77,6 +80,14 @@ public class User {
         this.userPassword = userPassword;
     }
 
+    public List<Job> getUserJobs() {
+        return userJobs;
+    }
+
+    public void setUserJobs(List<Job> userJobs) {
+        this.userJobs = userJobs;
+    }
+
     public List<Bid> getUserBids() {
         return userBids;
     }
@@ -84,5 +95,4 @@ public class User {
     public void setUserBids(List<Bid> userBids) {
         this.userBids = userBids;
     }
-
 }

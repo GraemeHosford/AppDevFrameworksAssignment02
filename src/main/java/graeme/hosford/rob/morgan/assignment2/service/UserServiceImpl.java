@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends BaseService<UserDAO, User> implements UserService {
 
+    private User currentUser;
+
     @Autowired
     public UserServiceImpl(UserDAO userDAO) {
         super(userDAO);
@@ -16,6 +18,17 @@ public class UserServiceImpl extends BaseService<UserDAO, User> implements UserS
     @Override
     public User getUserById(long userId) {
         return getEntityById(userId);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        currentUser = user;
+        save(user);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package graeme.hosford.rob.morgan.assignment2.controller;
 
-import graeme.hosford.rob.morgan.assignment2.UserForm;
+import graeme.hosford.rob.morgan.assignment2.controller.form.JobForm;
+import graeme.hosford.rob.morgan.assignment2.controller.form.UserForm;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,14 @@ public class MainController {
     @GetMapping(value = {"/", "/index"})
     public String indexMapping(Model model) {
         List<Job> jobs = jobService.getAllJobs();
+        User user = userService.getCurrentUser();
         model.addAttribute(jobs);
+
+        if (user != null) {
+            model.addAttribute(user);
+        } else {
+            model.addAttribute(new User());
+        }
         return "index";
     }
 
@@ -39,12 +48,26 @@ public class MainController {
         return "register";
     }
 
-    @PostMapping("/addUser")
-    public String addNewUser(@Valid UserForm userForm) {
+    @PostMapping("/registerUser")
+    public String addNewUser(@Valid UserForm userForm, Model model) {
         User user = new User(userForm.getName(), userForm.getPhone(), userForm.getEmail(), userForm.getPassword());
-        userService.save(user);
+        userService.setCurrentUser(user);
 
-        return "index";
+        return indexMapping(model);
+    }
+
+    @GetMapping("/newJob")
+    public String newJob(Model model) {
+        model.addAttribute("jobForm", new JobForm());
+        return "newJob";
+    }
+
+    @PostMapping("/addJob")
+    public String addNewJob(@Valid JobForm jobForm, Model model) {
+        Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(), LocalDate.now(), userService.getCurrentUser());
+        jobService.save(job);
+
+        return indexMapping(model);
     }
 
     @GetMapping("/login")

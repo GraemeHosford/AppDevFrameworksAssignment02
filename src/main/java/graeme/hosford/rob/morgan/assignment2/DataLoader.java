@@ -35,15 +35,15 @@ public class DataLoader implements ApplicationRunner {
 
         userService.save(user1, user2, user3);
 
-        Job job1 = new Job("Fix kitchen", "Kitchen needs fixing", LocalDate.now(), true);
-        Job job2 = new Job("Tile bathroom", "tile the bathroom", LocalDate.of(2019, 9, 23), false);
-        Job job3 = new Job("DO some other thing", "Default job", LocalDate.now(), true);
+        Job job1 = new Job("Fix kitchen", "Kitchen needs fixing", LocalDate.now(), user2);
+        Job job2 = new Job("Tile bathroom", "tile the bathroom", LocalDate.of(2019, 9, 23), user3);
+        Job job3 = new Job("DO some other thing", "Default job", LocalDate.now(), user1);
 
         jobService.save(job1, job2, job3);
 
-        Bid bid1 = new Bid(200.0, user1);
-        Bid bid2 = new Bid(134.34, user2);
-        Bid bid3 = new Bid(76.18, user3);
+        Bid bid1 = new Bid(200.0, user1, job1);
+        Bid bid2 = new Bid(134.34, user2, job2);
+        Bid bid3 = new Bid(76.18, user3, job3);
 
         bidService.save(bid1, bid2, bid3);
 

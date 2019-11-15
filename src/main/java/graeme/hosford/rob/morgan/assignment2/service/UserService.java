@@ -8,6 +8,10 @@ public interface UserService {
 
     User getUserById(long userId);
 
+    User getCurrentUser();
+
+    void setCurrentUser(User user);
+
     void save(User... user);
 
 }

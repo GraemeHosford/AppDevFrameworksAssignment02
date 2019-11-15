@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form class="register-form" method="post" th:action="@{/addUser}" th:object="${userform}">
+<form class="register-form" method="post" th:action="@{/registerUser}" th:object="${userform}">
     <label th:for="*{email}">Email: <input name="email" th:field="*{email}" type="text"/></label>
     <label th:for="*{password}">Password: <input name="password" th:field="*{password}" type="password"/></label>
     <label th:for="*{name}">Name: <input name="name" th:field="*{name}" type="text"/></label>

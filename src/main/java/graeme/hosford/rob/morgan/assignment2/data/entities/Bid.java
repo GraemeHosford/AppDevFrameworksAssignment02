@@ -20,12 +20,18 @@ public class Bid {
     @JsonIgnore
     private User user;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @JsonIgnore
+    private Job jobRef;
+
     public Bid() {
     }
 
-    public Bid(double bidAmount, User user) {
+    public Bid(double bidAmount, User user, Job job) {
         this.bidAmount = bidAmount;
         this.user = user;
+        this.jobRef = job;
     }
 
     public long getBidId() {
@@ -50,5 +56,13 @@ public class Bid {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Job getJobRef() {
+        return jobRef;
+    }
+
+    public void setJobRef(Job jobRef) {
+        this.jobRef = jobRef;
     }
 }

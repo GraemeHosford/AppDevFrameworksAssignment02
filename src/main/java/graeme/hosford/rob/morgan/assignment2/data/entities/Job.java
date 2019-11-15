@@ -1,11 +1,19 @@
 package graeme.hosford.rob.morgan.assignment2.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Table(name = "Job")
 public class Job {
+
+    private static final int JOB_ACTIVE_DAYS = 20;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +31,23 @@ public class Job {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @JsonIgnore
+    private User userRef;
+
+    @OneToMany(mappedBy = "jobRef")
+    private List<Bid> jobBids = new ArrayList<>();
+
     public Job() {
     }
 
-    public Job(String jobName, String jobDescription, LocalDate jobPublishedDate, boolean active) {
+    public Job(String jobName, String jobDescription, LocalDate jobPublishedDate, User jobOwner) {
         this.jobName = jobName;
         this.jobDescription = jobDescription;
         this.jobPublishedDate = jobPublishedDate;
-        this.active = active;
+        this.userRef = jobOwner;
+        this.active = DAYS.between(jobPublishedDate, LocalDate.now()) <= JOB_ACTIVE_DAYS;
     }
 
     public long getJobId() {
@@ -73,4 +90,19 @@ public class Job {
         this.active = active;
     }
 
+    public User getUserRef() {
+        return userRef;
+    }
+
+    public void setUserRef(User userRef) {
+        this.userRef = userRef;
+    }
+
+    public List<Bid> getJobBids() {
+        return jobBids;
+    }
+
+    public void setJobBids(List<Bid> jobBids) {
+        this.jobBids = jobBids;
+    }
 }

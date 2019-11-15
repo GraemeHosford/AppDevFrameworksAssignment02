@@ -1,4 +1,4 @@
-package graeme.hosford.rob.morgan.assignment2;
+package graeme.hosford.rob.morgan.assignment2.controller.form;
 
 import javax.validation.constraints.Size;
 
