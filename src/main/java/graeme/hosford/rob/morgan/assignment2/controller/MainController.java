@@ -1,7 +1,8 @@
 package graeme.hosford.rob.morgan.assignment2.controller;
 
 import graeme.hosford.rob.morgan.assignment2.controller.form.JobForm;
-import graeme.hosford.rob.morgan.assignment2.controller.form.UserForm;
+import graeme.hosford.rob.morgan.assignment2.controller.form.LoginForm;
+import graeme.hosford.rob.morgan.assignment2.controller.form.RegisterForm;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
@@ -44,13 +45,14 @@ public class MainController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("userform", new UserForm());
+        model.addAttribute("userform", new RegisterForm());
         return "register";
     }
 
     @PostMapping("/registerUser")
-    public String addNewUser(@Valid UserForm userForm, Model model) {
-        User user = new User(userForm.getName(), userForm.getPhone(), userForm.getEmail(), userForm.getPassword());
+    public String addNewUser(@Valid RegisterForm registerForm, Model model) {
+        User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(), registerForm.getPassword());
+        userService.save(user);
         userService.setCurrentUser(user);
 
         return indexMapping(model);
@@ -71,8 +73,20 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("loginForm", new LoginForm());
         return "login";
+    }
+
+    @PostMapping("/loginUser")
+    public String completeLogin(@Valid LoginForm loginForm, Model model) {
+        User user = userService.loginUser(loginForm.getEmail(), loginForm.getPassword());
+
+        if (user != null) {
+            userService.setCurrentUser(user);
+        }
+
+        return indexMapping(model);
     }
 
 }

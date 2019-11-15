@@ -5,6 +5,8 @@ import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl extends BaseService<UserDAO, User> implements UserService {
 
@@ -26,9 +28,14 @@ public class UserServiceImpl extends BaseService<UserDAO, User> implements UserS
     }
 
     @Override
+    public User loginUser(String email, String password) {
+        Optional<User> user = dao.getUserAccount(email, password);
+        return user.orElse(null);
+    }
+
+    @Override
     public void setCurrentUser(User user) {
         currentUser = user;
-        save(user);
     }
 
     @Override

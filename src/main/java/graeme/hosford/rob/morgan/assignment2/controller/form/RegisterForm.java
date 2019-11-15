@@ -2,7 +2,7 @@ package graeme.hosford.rob.morgan.assignment2.controller.form;
 
 import javax.validation.constraints.Size;
 
-public class UserForm {
+public class RegisterForm {
 
     @Size(min = 5)
     private String email;

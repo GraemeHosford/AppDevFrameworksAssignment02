@@ -10,6 +10,8 @@ public interface UserService {
 
     User getCurrentUser();
 
+    User loginUser(String email, String password);
+
     void setCurrentUser(User user);
 
     void save(User... user);
