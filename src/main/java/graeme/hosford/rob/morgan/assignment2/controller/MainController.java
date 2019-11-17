@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -53,14 +52,14 @@ public class MainController {
     }
 
     @PostMapping(value = "/registerUser")
-    public String addNewUser(@Valid RegisterForm registerForm,BindingResult binding, Model model ) {
-        if(binding.hasErrors()) {
-            return"redirect:register";
-        }else{
-        User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(), registerForm.getPassword());
-        userService.save(user);
-        userService.setCurrentUser(user);
-        return indexMapping(model);
+    public String addNewUser(@Valid RegisterForm registerForm, BindingResult binding, Model model) {
+        if (binding.hasErrors()) {
+            return "redirect:register";
+        } else {
+            User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(), registerForm.getPassword());
+            userService.save(user);
+            userService.setCurrentUser(user);
+            return indexMapping(model);
         }
     }
 

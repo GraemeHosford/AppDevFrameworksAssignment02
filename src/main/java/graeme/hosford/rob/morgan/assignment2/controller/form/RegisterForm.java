@@ -4,12 +4,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class RegisterForm {
+
     @Email
     private String email;
+
     @Size(min = 3, max = 20)
     private String password;
+
     @Size(min = 3, max = 25)
     private String name;
+
     @Size(max = 10, min = 10)
     private String phone;
 
