@@ -1,18 +1,15 @@
 package graeme.hosford.rob.morgan.assignment2.controller.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class RegisterForm {
-
-    @Size(min = 5)
+    @Email
     private String email;
-
-    @Size(min = 8, max = 20)
+    @Size(min = 3, max = 20)
     private String password;
-
     @Size(min = 3, max = 25)
     private String name;
-
     @Size(max = 10, min = 10)
     private String phone;
 
