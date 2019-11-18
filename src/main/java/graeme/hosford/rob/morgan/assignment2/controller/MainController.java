@@ -1,10 +1,12 @@
 package graeme.hosford.rob.morgan.assignment2.controller;
 
+import graeme.hosford.rob.morgan.assignment2.controller.form.BidForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.JobForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.LoginForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.RegisterForm;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
+import graeme.hosford.rob.morgan.assignment2.service.BidService;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
 import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -23,11 +26,13 @@ public class MainController {
 
     private JobService jobService;
     private UserService userService;
+    private BidService bidService;
 
     @Autowired
-    public MainController(JobService jobService, UserService userService) {
+    public MainController(JobService jobService, UserService userService, BidService bidService) {
         this.jobService = jobService;
         this.userService = userService;
+        this.bidService = bidService;
     }
 
     @GetMapping(value = {"/", "/index"})
@@ -90,6 +95,27 @@ public class MainController {
         if (user != null) {
             userService.setCurrentUser(user);
         }
+
+        return indexMapping(model);
+    }
+
+    @GetMapping("/job/{jobId}")
+    public String showJob(Model model, @PathVariable("jobId") long jobId) {
+        Job job = jobService.getJobById(jobId);
+
+        System.out.println(job);
+        BidForm bidForm = new BidForm();
+
+        model.addAttribute("job", job);
+        model.addAttribute("currentUser", userService.getCurrentUser());
+        model.addAttribute("bidForm", bidForm);
+        return "job";
+    }
+
+    @PostMapping("/makeBid")
+    public String makeBid(@Valid BidForm bidForm, Model model) {
+        bidService.makeBid(bidForm.getAmount(), jobService.getJobById(bidForm.getJob()),
+                userService.getUserById(bidForm.getBidMaker()));
 
         return indexMapping(model);
     }

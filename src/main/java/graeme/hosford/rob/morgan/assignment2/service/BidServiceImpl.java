@@ -2,6 +2,8 @@ package graeme.hosford.rob.morgan.assignment2.service;
 
 import graeme.hosford.rob.morgan.assignment2.data.dao.BidDAO;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Bid;
+import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
+import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +21,9 @@ public class BidServiceImpl extends BaseService<BidDAO, Bid> implements BidServi
     }
 
     @Override
-    public boolean makeBid(long bidId, double bidAmount) {
-        Bid bid = getEntityById(bidId);
-
-        if (bidAmount < bid.getBidAmount()) {
-            bid.setBidAmount(bidAmount);
-            save(bid);
-            return true;
-        } else {
-            return false;
-        }
+    public void makeBid(double bidAmount, Job job, User user) {
+        Bid bid = new Bid(bidAmount, user, job);
+        save(bid);
     }
 
     @Override

@@ -1,29 +1,23 @@
 package graeme.hosford.rob.morgan.assignment2.controller;
 
-import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
+import graeme.hosford.rob.morgan.assignment2.service.BidService;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
+import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class JobsController {
 
     private JobService jobService;
+    private UserService userService;
+    private BidService bidService;
 
     @Autowired
-    public JobsController(JobService jobService) {
+    public JobsController(JobService jobService, UserService userService, BidService bidService) {
         this.jobService = jobService;
-    }
-
-    @GetMapping("/jobs")
-    public String showAllJobs(Model model) {
-        List<Job> jobs = jobService.getAllJobs();
-        model.addAttribute("jobs", jobs);
-        return "jobs";
+        this.userService = userService;
+        this.bidService = bidService;
     }
 
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${job.getJobName()}"></title>
+</head>
+<body>
+<span th:text="${job.getJobName()}">Job Name</span><br/>
+<span th:text="${job.getJobDescription()}">Job Description</span><br/>
+<span th:text="${job.getJobPublishedDate()}">Publish Date</span><br/>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Bid Amount</th>
+    </tr>
+
+    <tr th:each="bid : *{job.getJobBids()}">
+        <td th:text="*{bid.getUser().userName}">User who made bid</td>
+        <td th:text="*{bid.getBidAmount()}">Amount they bid</td>
+    </tr>
+</table>
+
+<form class="job-form" method="post" th:action="@{/makeBid}" th:object="${bidForm}">
+    <label th:for="*{amount}">Bid Amount: <input name="bidAmount" th:field="*{amount}" type="number"/></label>
+    <input type="submit" value="Make Bid"/>
+</form>
+</body>
+</html>

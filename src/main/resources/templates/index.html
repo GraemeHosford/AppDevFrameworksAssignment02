@@ -18,13 +18,14 @@
 
     <tr th:each="job : ${jobList}">
         <td th:text="*{job.jobId}">1</td>
-        <td th:text="*{job.jobName}">Job</td>
+        <td><a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:text="*{job.jobName}">Job</a></td>
         <td th:text="*{job.jobDescription}">Job Description</td>
         <td th:text="*{job.jobPublishedDate}">Published Date</td>
         <td th:if="${user.userEmail == null}"><a href="/login">Sign in to make a bid</a></td>
         <td th:if="*{job.active}" th:unless="${user.userEmail == null}">
             <p th:if="${user?.userId eq job.userRef.userId}">You cannot bid on your own job</p>
-            <a th:href="@{/makebid/${job.jobId}}" th:unless="${user?.userId eq job.userRef.userId}">Make Bid</a>
+            <a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:unless="${user?.userId eq job.userRef.userId}">Make
+                Bid</a>
         </td>
         <td th:unless="*{job.active}">
             <p th:unless="${user.userEmail == null}">Job is out of date</p>
