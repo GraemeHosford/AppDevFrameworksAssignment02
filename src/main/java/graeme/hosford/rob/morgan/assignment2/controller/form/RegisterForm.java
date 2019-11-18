@@ -1,21 +1,28 @@
 package graeme.hosford.rob.morgan.assignment2.controller.form;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class RegisterForm {
-
-    @Email
+    @Column(name = "Email")
+    @Email(message = "Not a valid Email!")
     private String email;
-
-    @Size(min = 3, max = 20)
+    @Column(name = "Password")
+    @Size(min = 3, max = 20, message = "You need at least 3 characters")
     private String password;
-
-    @Size(min = 3, max = 25)
+    @Column(name="Name")
+    @Size(min = 3, max = 25, message = "You need more than 3 characters!")
     private String name;
-
-    @Size(max = 10, min = 10)
+    @Column(name = "Phone")
+    @Size(max = 10, min = 10, message="Please enter a valid number!")
     private String phone;
+
+
+
+    public RegisterForm() {
+
+    }
 
     public String getEmail() {
         return email;
