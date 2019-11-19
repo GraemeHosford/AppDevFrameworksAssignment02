@@ -3,6 +3,7 @@ package graeme.hosford.rob.morgan.assignment2.controller;
 import graeme.hosford.rob.morgan.assignment2.controller.form.BidForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.JobForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.RegisterForm;
+import graeme.hosford.rob.morgan.assignment2.data.entities.Bid;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Role;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
@@ -67,7 +68,6 @@ public class MainController {
             User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(),
                     registerForm.getPassword(), new Role(registerForm.getEmail(), "ROLE_USER"));
             userService.save(user);
-            userService.setCurrentUser(user);
             return "redirect:" + indexMapping(model, prin);
         }
     }
@@ -80,7 +80,7 @@ public class MainController {
 
     @PostMapping("/addJob")
     public String addNewJob(@Valid JobForm jobForm, Model model, Principal user) {
-        Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(), LocalDate.now(), userService.getCurrentUser());
+        Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(), LocalDate.now(), userService.findByEmail(user.getName()));
         jobService.save(job);
 
         return "redirect:" + indexMapping(model, user);
@@ -95,21 +95,22 @@ public class MainController {
     public String showJob(Model model, @PathVariable("jobId") long jobId) {
         Job job = jobService.getJobById(jobId);
 
-        System.out.println(job);
         BidForm bidForm = new BidForm();
 
         model.addAttribute("job", job);
-        model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("bidForm", bidForm);
         return "job";
     }
 
-    @PostMapping("/makeBid")
-    public String makeBid(@Valid BidForm bidForm, Model model, Principal user) {
-        bidService.makeBid(bidForm.getAmount(), jobService.getJobById(bidForm.getJob()),
-                userService.getUserById(bidForm.getBidMaker()));
+    @PostMapping("/makeBid/{jobId}")
+    public String makeBid(@Valid BidForm bidForm, Model model, Principal user, @PathVariable long jobId) {
+        Job job = jobService.getJobById(jobId);
+        User bidder = userService.findByEmail(user.getName());
+        Bid bid = new Bid(bidForm.getAmount(), bidder, job);
 
-        return "redirect:" + indexMapping(model, user);
+        bidService.save(bid);
+
+        return showJob(model, jobId);
     }
 
 }

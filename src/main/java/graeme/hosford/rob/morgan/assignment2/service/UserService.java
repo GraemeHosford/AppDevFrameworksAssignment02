@@ -8,13 +8,9 @@ public interface UserService {
 
     User getUserById(long userId);
 
-    User getCurrentUser();
-
     User loginUser(String email, String password);
 
     User findByEmail(String email);
-
-    void setCurrentUser(User user);
 
     void save(User... user);
 

@@ -10,8 +10,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl extends BaseService<UserDAO, User> implements UserService {
 
-    private User currentUser;
-
     @Autowired
     public UserServiceImpl(UserDAO userDAO) {
         super(userDAO);
@@ -23,19 +21,9 @@ public class UserServiceImpl extends BaseService<UserDAO, User> implements UserS
     }
 
     @Override
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    @Override
     public User loginUser(String email, String password) {
         Optional<User> user = dao.getUserAccount(email, password);
         return user.orElse(null);
-    }
-
-    @Override
-    public void setCurrentUser(User user) {
-        currentUser = user;
     }
 
     @Override
