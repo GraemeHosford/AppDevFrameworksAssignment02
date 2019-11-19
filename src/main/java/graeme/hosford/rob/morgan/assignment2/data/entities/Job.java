@@ -47,6 +47,13 @@ public class Job {
         this.jobDescription = jobDescription;
         this.jobPublishedDate = jobPublishedDate;
         this.userRef = jobOwner;
+
+        /* Calling this basically the same as just setting active to true at the point the job is created.
+         * Better to just keep it all in the one method though. */
+        updateActiveState();
+    }
+
+    public void updateActiveState() {
         this.active = DAYS.between(jobPublishedDate, LocalDate.now()) <= JOB_ACTIVE_DAYS;
     }
 

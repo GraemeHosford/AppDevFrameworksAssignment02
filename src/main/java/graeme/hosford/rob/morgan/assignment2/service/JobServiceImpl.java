@@ -26,6 +26,15 @@ public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobServi
     }
 
     @Override
+    public void updateAllJobsActiveStatus() {
+        List<Job> all = getAllJobs();
+
+        for (Job job : all) {
+            job.updateActiveState();
+        }
+    }
+
+    @Override
     public List<Job> getActiveJobs() {
         return dao.getJobByActive(true);
     }

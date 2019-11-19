@@ -14,4 +14,6 @@ public interface JobService {
 
     void save(Job... jobs);
 
+    void updateAllJobsActiveStatus();
+
 }
