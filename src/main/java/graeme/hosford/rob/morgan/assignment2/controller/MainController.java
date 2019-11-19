@@ -2,9 +2,9 @@ package graeme.hosford.rob.morgan.assignment2.controller;
 
 import graeme.hosford.rob.morgan.assignment2.controller.form.BidForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.JobForm;
-import graeme.hosford.rob.morgan.assignment2.controller.form.LoginForm;
 import graeme.hosford.rob.morgan.assignment2.controller.form.RegisterForm;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
+import graeme.hosford.rob.morgan.assignment2.data.entities.Role;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.BidService;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,16 +37,18 @@ public class MainController {
     }
 
     @GetMapping(value = {"/", "/index"})
-    public String indexMapping(Model model) {
+    public String indexMapping(Model model, Principal user) {
         List<Job> jobs = jobService.getAllJobs();
-        User user = userService.getCurrentUser();
         model.addAttribute(jobs);
 
         if (user != null) {
-            model.addAttribute(user);
+            String email = user.getName();
+            long userId = userService.findByEmail(email).getUserId();
+            model.addAttribute("userid", userId);
         } else {
-            model.addAttribute(new User());
+            model.addAttribute("userid", -1);
         }
+
         return "index";
     }
 
@@ -57,14 +60,15 @@ public class MainController {
     }
 
     @PostMapping(value = "/registerUser")
-    public String addNewUser(@Valid RegisterForm registerForm, BindingResult binding, Model model) {
+    public String addNewUser(@Valid RegisterForm registerForm, BindingResult binding, Model model, Principal prin) {
         if (binding.hasErrors()) {
             return "redirect:register";
         } else {
-            User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(), registerForm.getPassword());
+            User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(),
+                    registerForm.getPassword(), new Role(registerForm.getEmail(), "ROLE_USER"));
             userService.save(user);
             userService.setCurrentUser(user);
-            return indexMapping(model);
+            return "redirect:" + indexMapping(model, prin);
         }
     }
 
@@ -75,28 +79,16 @@ public class MainController {
     }
 
     @PostMapping("/addJob")
-    public String addNewJob(@Valid JobForm jobForm, Model model) {
+    public String addNewJob(@Valid JobForm jobForm, Model model, Principal user) {
         Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(), LocalDate.now(), userService.getCurrentUser());
         jobService.save(job);
 
-        return indexMapping(model);
+        return "redirect:" + indexMapping(model, user);
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("loginForm", new LoginForm());
+    public String login() {
         return "login";
-    }
-
-    @PostMapping("/loginUser")
-    public String completeLogin(@Valid LoginForm loginForm, Model model) {
-        User user = userService.loginUser(loginForm.getEmail(), loginForm.getPassword());
-
-        if (user != null) {
-            userService.setCurrentUser(user);
-        }
-
-        return indexMapping(model);
     }
 
     @GetMapping("/job/{jobId}")
@@ -113,11 +105,11 @@ public class MainController {
     }
 
     @PostMapping("/makeBid")
-    public String makeBid(@Valid BidForm bidForm, Model model) {
+    public String makeBid(@Valid BidForm bidForm, Model model, Principal user) {
         bidService.makeBid(bidForm.getAmount(), jobService.getJobById(bidForm.getJob()),
                 userService.getUserById(bidForm.getBidMaker()));
 
-        return indexMapping(model);
+        return "redirect:" + indexMapping(model, user);
     }
 
 }

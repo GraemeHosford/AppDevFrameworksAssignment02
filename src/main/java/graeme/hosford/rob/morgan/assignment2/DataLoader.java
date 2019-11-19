@@ -2,13 +2,16 @@ package graeme.hosford.rob.morgan.assignment2;
 
 import graeme.hosford.rob.morgan.assignment2.data.entities.Bid;
 import graeme.hosford.rob.morgan.assignment2.data.entities.Job;
+import graeme.hosford.rob.morgan.assignment2.data.entities.Role;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.BidService;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
+import graeme.hosford.rob.morgan.assignment2.service.RoleService;
 import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -19,19 +22,30 @@ public class DataLoader implements ApplicationRunner {
     private BidService bidService;
     private JobService jobService;
     private UserService userService;
+    private RoleService roleService;
+    private PasswordEncoder passEncoder;
 
     @Autowired
-    public DataLoader(BidService bidService, JobService jobService, UserService userService) {
+    public DataLoader(BidService bidService, JobService jobService,
+                      UserService userService, RoleService roleService,
+                      PasswordEncoder passEncoder) {
         this.bidService = bidService;
         this.jobService = jobService;
         this.userService = userService;
+        this.roleService = roleService;
+        this.passEncoder = passEncoder;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        User user1 = new User("Graeme Hosford", "0852336922", "graeme.hosford@mycit.ie", "SomePassword");
-        User user2 = new User("Robert Morgan", "0873755491", "rob.morgan@mycit.ie", "Password1");
-        User user3 = new User("John Smith", "0856671935", "j.smith@gmail.com", "JohnSmithPassword");
+        Role role1 = new Role("graeme.hosford@mycit.ie", "ROLE_USER");
+        Role role2 = new Role("rob.morgan@mycit.ie", "ROLE_USER");
+        Role role3 = new Role("j.smith@gmail.com", "ROLE_USER");
+        roleService.save(role1, role2, role3);
+
+        User user1 = new User("Graeme Hosford", "0852336922", "graeme.hosford@mycit.ie", passEncoder.encode("SomePassword"), role1);
+        User user2 = new User("Robert Morgan", "0873755491", "rob.morgan@mycit.ie", passEncoder.encode("Password1"), role2);
+        User user3 = new User("John Smith", "0856671935", "j.smith@gmail.com", passEncoder.encode("JohnSmithPassword"), role3);
 
         userService.save(user1, user2, user3);
 

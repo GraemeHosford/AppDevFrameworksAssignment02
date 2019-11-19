@@ -39,6 +39,11 @@ public class UserServiceImpl extends BaseService<UserDAO, User> implements UserS
     }
 
     @Override
+    public User findByEmail(String email) {
+        return dao.getUserFromEmail(email);
+    }
+
+    @Override
     public void save(User... users) {
         saveEntities(users);
     }
