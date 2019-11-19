@@ -21,7 +21,8 @@
     </tr>
 </table>
 
-<form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}" th:object="${bidForm}">
+<form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}"
+      th:if="${userid != job.userRef.userId}" th:object="${bidForm}">
     <label th:for="*{amount}">Bid Amount: <input name="bidAmount" th:field="*{amount}" type="number"/></label>
     <input type="submit" value="Make Bid"/>
 </form>

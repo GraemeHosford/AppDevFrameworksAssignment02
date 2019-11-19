@@ -21,16 +21,16 @@ public class User {
 
     @Column
     @Email
-    private String userEmail;
+    private String useremail;
 
     @Column
-    private String userPassword;
+    private String userpassword;
 
     @Column
-    private boolean userEnabled;
+    private boolean userenabled;
 
     @OneToOne
-    @JoinColumn(name = "roleEmail", nullable = false)
+    @JoinColumn(name = "roleemail", nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "userRef", fetch = FetchType.EAGER)
@@ -45,9 +45,9 @@ public class User {
     public User(String userName, String userPhone, String userEmail, String userPassword, Role userRole) {
         this.userName = userName;
         this.userPhone = userPhone;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.userEnabled = true;
+        this.useremail = userEmail;
+        this.userpassword = userPassword;
+        this.userenabled = true;
         this.role = userRole;
     }
 
@@ -75,22 +75,6 @@ public class User {
         this.userPhone = userPhone;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
     public List<Job> getUserJobs() {
         return userJobs;
     }
@@ -107,19 +91,35 @@ public class User {
         this.userBids = userBids;
     }
 
-    public boolean isUserEnabled() {
-        return userEnabled;
-    }
-
-    public void setUserEnabled(boolean userEnabled) {
-        this.userEnabled = userEnabled;
-    }
-
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
+    public String getUserpassword() {
+        return userpassword;
+    }
+
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword;
+    }
+
+    public boolean isUserenabled() {
+        return userenabled;
+    }
+
+    public void setUserenabled(boolean userenabled) {
+        this.userenabled = userenabled;
     }
 }

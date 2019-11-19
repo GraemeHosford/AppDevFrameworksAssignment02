@@ -8,32 +8,32 @@ import javax.persistence.Id;
 public class Role {
 
     @Id
-    private String roleEmail;
+    private String email;
 
     @Column
-    private String roleDescription;
+    private String description;
 
     public Role() {
     }
 
-    public Role(String userEmail, String roleDescription) {
-        this.roleEmail = userEmail;
-        this.roleDescription = roleDescription;
+    public Role(String email, String description) {
+        this.email = email;
+        this.description = description;
     }
 
     public String getUserEmail() {
-        return roleEmail;
+        return email;
     }
 
     public void setUserEmail(String userEmail) {
-        this.roleEmail = userEmail;
+        this.email = userEmail;
     }
 
     public String getRoleDescription() {
-        return roleDescription;
+        return description;
     }
 
     public void setRoleDescription(String roleDescription) {
-        this.roleDescription = roleDescription;
+        this.description = roleDescription;
     }
 }

@@ -94,13 +94,22 @@ public class MainController {
     }
 
     @GetMapping("/job/{jobId}")
-    public String showJob(Model model, @PathVariable("jobId") long jobId) {
+    public String showJob(Model model, Principal user, @PathVariable("jobId") long jobId) {
         Job job = jobService.getJobById(jobId);
 
         BidForm bidForm = new BidForm();
 
         model.addAttribute("job", job);
         model.addAttribute("bidForm", bidForm);
+
+        if (user != null) {
+            String email = user.getName();
+            long userId = userService.findByEmail(email).getUserId();
+            model.addAttribute("userid", userId);
+        } else {
+            model.addAttribute("userid", -1);
+        }
+
         return "job";
     }
 
@@ -112,7 +121,7 @@ public class MainController {
 
         bidService.save(bid);
 
-        return showJob(model, jobId);
+        return showJob(model, user, jobId);
     }
 
 }

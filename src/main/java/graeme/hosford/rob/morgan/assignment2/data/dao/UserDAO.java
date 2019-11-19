@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserDAO extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.userEmail = :email AND u.userPassword = :password")
+    @Query("SELECT u FROM User u WHERE u.useremail = :email AND u.userpassword = :password")
     Optional<User> getUserAccount(@Param("email") String email, @Param("password") String password);
 
-    @Query("SELECT u FROM User u WHERE u.userEmail = :email")
+    @Query("SELECT u FROM User u WHERE u.useremail = :email")
     User getUserFromEmail(@Param("email") String email);
 
 }

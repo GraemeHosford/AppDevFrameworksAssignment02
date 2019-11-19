@@ -5,8 +5,8 @@
     <title>Assignment 02 Project</title>
 </head>
 <body>
-<a href="/register">Register</a>
-<a href="/login">Login</a>
+<a href="/register" th:if="*{userid == -1}">Register</a>
+<a href="/login" th:if="*{userid == -1}">Login</a>
 <table>
     <tr>
         <th>ID</th>
@@ -32,5 +32,8 @@
         </td>
     </tr>
 </table>
+
+<a href="/newJob" th:if="*{userid != -1}">Add a new job</a>
+
 </body>
 </html>
