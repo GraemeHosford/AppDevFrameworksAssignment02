@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
+<style>
+    .span {
+        color: orangered;
+        font-weight: bold;
+        font-size: larger;
+    }
+</style>
 <body>
 
-<form class="register-form" method="post" th:action="@{/registerUser}" th:object="${userform}">
+<form class="register-form" method="post" th:action="@{/registerUser}" th:object="${registerForm}">
     <label th:for="*{email}">Email: <input name="email" th:field="*{email}" type="email"/></label>
-    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
+    <span class="span" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Error</span>
     <label th:for="*{password}">Password: <input name="password" th:field="*{password}" type="password"/></label>
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
-    <label th:for="*{name}">Name: <input name="name" th:field="*{name}" type="text"/></label>
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+    <span class="span" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Error</span>
+    <label th:for="*{name}">Name<input name="name" th:field="*{name}" type="text"/></label>
+    <span class="span" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Error</span>
     <label th:for="*{phone}">Phone: <input name="phone" th:field="*{phone}" type="number"/></label>
-    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Error</span>
+    <span class="span" th:errors="*{phone}" th:if="${#fields.hasErrors('phone')}">Error</span>
     <input type="submit" value="Sign Up"/>
-
 </form>
 
 </body>

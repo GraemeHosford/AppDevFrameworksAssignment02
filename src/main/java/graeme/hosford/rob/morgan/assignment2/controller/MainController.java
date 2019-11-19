@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -55,21 +56,22 @@ public class MainController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("userform", new RegisterForm());
+        model.addAttribute("registerForm", new RegisterForm());
 
         return "register";
     }
 
     @PostMapping(value = "/registerUser")
-    public String addNewUser(@Valid RegisterForm registerForm, BindingResult binding, Model model, Principal prin) {
+    public String addNewUser(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
+                             BindingResult binding, Model model, Principal prin) {
         if (binding.hasErrors()) {
-            return "redirect:register";
-        } else {
-            User user = new User(registerForm.getName(), registerForm.getPhone(), registerForm.getEmail(),
-                    registerForm.getPassword(), new Role(registerForm.getEmail(), "ROLE_USER"));
-            userService.save(user);
-            return "redirect:" + indexMapping(model, prin);
+            return "register";
         }
+
+        User user = new User(registerForm.getName(), registerForm.getPhone(),
+                registerForm.getEmail(), registerForm.getPassword(), new Role(registerForm.getEmail(), "ROLE_USER"));
+        userService.save(user);
+        return indexMapping(model, prin);
     }
 
     @GetMapping("/newJob")
