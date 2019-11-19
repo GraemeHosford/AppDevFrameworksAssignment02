@@ -9,6 +9,7 @@ import graeme.hosford.rob.morgan.assignment2.data.entities.Role;
 import graeme.hosford.rob.morgan.assignment2.data.entities.User;
 import graeme.hosford.rob.morgan.assignment2.service.BidService;
 import graeme.hosford.rob.morgan.assignment2.service.JobService;
+import graeme.hosford.rob.morgan.assignment2.service.RoleService;
 import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,12 +31,15 @@ public class MainController {
     private JobService jobService;
     private UserService userService;
     private BidService bidService;
+    private RoleService roleService;
 
     @Autowired
-    public MainController(JobService jobService, UserService userService, BidService bidService) {
+    public MainController(JobService jobService, UserService userService,
+                          BidService bidService, RoleService roleService) {
         this.jobService = jobService;
         this.userService = userService;
         this.bidService = bidService;
+        this.roleService = roleService;
     }
 
     @GetMapping(value = {"/", "/index"})
@@ -68,10 +72,14 @@ public class MainController {
             return "register";
         }
 
+        Role role = new Role(registerForm.getEmail(), "ROLE_USER");
+        roleService.save(role);
+
         User user = new User(registerForm.getName(), registerForm.getPhone(),
-                registerForm.getEmail(), registerForm.getPassword(), new Role(registerForm.getEmail(), "ROLE_USER"));
+                registerForm.getEmail(), registerForm.getPassword(), role);
         userService.save(user);
-        return indexMapping(model, prin);
+
+        return "redirect:" + indexMapping(model, prin);
     }
 
     @GetMapping("/newJob")
