@@ -4,10 +4,10 @@ import javax.validation.constraints.Size;
 
 public class LoginForm {
 
-    @Size(min = 5)
+    @Size(min = 5, message = "Please enter a valid email")
     private String email;
 
-    @Size(min = 8, max = 20)
+    @Size(min = 8, max = 20, message = "Password not valid")
     private String password;
 
     public String getEmail() {

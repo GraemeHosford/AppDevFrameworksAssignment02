@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -32,14 +32,16 @@ public class MainController {
     private UserService userService;
     private BidService bidService;
     private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public MainController(JobService jobService, UserService userService,
-                          BidService bidService, RoleService roleService) {
+                          BidService bidService, RoleService roleService,PasswordEncoder passwordEncoder) {
         this.jobService = jobService;
         this.userService = userService;
         this.bidService = bidService;
         this.roleService = roleService;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @GetMapping(value = {"/", "/index"})
@@ -76,7 +78,7 @@ public class MainController {
         roleService.save(role);
 
         User user = new User(registerForm.getName(), registerForm.getPhone(),
-                registerForm.getEmail(), registerForm.getPassword(), role);
+                registerForm.getEmail(), passwordEncoder.encode(registerForm.getPassword()), role);
         userService.save(user);
 
         return "redirect:" + indexMapping(model, prin);
@@ -98,6 +100,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
+
         return "login";
     }
 
