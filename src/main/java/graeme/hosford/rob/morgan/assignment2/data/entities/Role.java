@@ -7,6 +7,8 @@ import javax.persistence.Id;
 @Entity
 public class Role {
 
+    public static final String USER = "ROLE_USER";
+
     @Id
     private String email;
 

@@ -38,9 +38,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        Role role1 = new Role("graeme.hosford@mycit.ie", "ROLE_USER");
-        Role role2 = new Role("rob.morgan@mycit.ie", "ROLE_USER");
-        Role role3 = new Role("j.smith@gmail.com", "ROLE_USER");
+        Role role1 = new Role("graeme.hosford@mycit.ie", Role.USER);
+        Role role2 = new Role("rob.morgan@mycit.ie", Role.USER);
+        Role role3 = new Role("j.smith@gmail.com", Role.USER);
         roleService.save(role1, role2, role3);
 
         User user1 = new User("Graeme Hosford", "0852336922", "graeme.hosford@mycit.ie", passEncoder.encode("SomePassword"), role1);
