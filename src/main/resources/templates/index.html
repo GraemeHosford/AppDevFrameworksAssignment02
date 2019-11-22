@@ -3,39 +3,41 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment 02 Project</title>
+    <title th:text="#{index.pageTitle}">Assignment 02 Project</title>
 </head>
 <body>
-<a href="/register" sec:authorize="!isAuthenticated()">Register</a>
-<a href="/login" sec:authorize="!isAuthenticated()">Login</a>
-<a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
+<a href="/register" sec:authorize="!isAuthenticated()" th:text="#{index.register}">Register</a>
+<a href="/login" sec:authorize="!isAuthenticated()" th:text="#{index.login}">Login</a>
+<a href="/logout" sec:authorize="isAuthenticated()" th:text="#{index.logout}">Logout</a>
+<a href="/?lang=fr" th:text="#{index.switchFrench}">Switch to French</a>
+<a href="/?lang=en" th:text="#{index.switchEnglish}">Switch to English</a>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Job</th>
-        <th>Description</th>
-        <th>Published Date</th>
-        <th>Bid</th>
+        <th th:text="#{index.jobNameHeader}">Job</th>
+        <th th:text="#{index.jobDescriptionHeader}">Description</th>
+        <th th:text="#{index.jobPublishedDateHeader}">Published Date</th>
+        <th th:text="#{index.makeBidHeader}">Bid</th>
     </tr>
 
     <tr th:each="job : ${jobList}">
-        <td th:text="*{job.jobId}">1</td>
         <td><a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:text="*{job.jobName}">Job</a></td>
         <td th:text="*{job.jobDescription}">Job Description</td>
         <td th:text="*{job.jobPublishedDate}">Published Date</td>
-        <td sec:authorize="!isAuthenticated()"><a href="/login">Sign in to make a bid</a></td>
+        <td sec:authorize="!isAuthenticated()"><a href="/login" th:text="#{index.signInBidMessage}">Sign in to make a
+            bid</a></td>
         <td sec:authorize="isAuthenticated()" th:if="*{job.active}">
-            <p th:if="${userid eq job.userRef.userId}">You cannot bid on your own job</p>
-            <a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:unless="${userid eq job.userRef.userId}">Make
-                Bid</a>
+            <p th:if="${userid eq job.userRef.userId}" th:text="#{index.ownJobMessage}">You cannot bid on your own
+                job</p>
+            <a th:href="@{/job/{jobId}(jobId=${job.jobId})}"
+               th:text="#{index.makeBid}" th:unless="${userid eq job.userRef.userId}">Make Bid</a>
         </td>
         <td th:unless="*{job.active}">
-            <p sec:authorize="isAuthenticated()">Job is out of date</p>
+            <p sec:authorize="isAuthenticated()" th:text="#{index.outOfDate}">Job is out of date</p>
         </td>
     </tr>
 </table>
 
-<a href="/newJob" sec:authorize="isAuthenticated()">Add a new job</a>
+<a href="/newJob" sec:authorize="isAuthenticated()" th:text="#{index.addNewJob}">Add a new job</a>
 
 </body>
 </html>

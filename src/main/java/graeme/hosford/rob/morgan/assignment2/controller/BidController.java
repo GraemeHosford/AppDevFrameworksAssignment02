@@ -9,11 +9,13 @@ import graeme.hosford.rob.morgan.assignment2.service.JobService;
 import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class BidController {
@@ -30,8 +32,16 @@ public class BidController {
     }
 
     @PostMapping("/makeBid/{jobId}")
-    public String makeBid(@Valid BidForm bidForm, Principal user, @PathVariable long jobId) {
+    public String makeBid(@ModelAttribute @Valid BidForm bidForm,
+                          Principal user, @PathVariable long jobId) {
         Job job = jobService.getJobById(jobId);
+        List<Bid> jobBids = job.getJobBids();
+
+        if (bidForm.getAmount() >= jobBids.get(jobBids.size() - 1).getBidAmount()) {
+            /* Newly entered bid is not lower than previous lowest bid so don't save this one */
+            return "redirect:/job/" + jobId;
+        }
+
         User bidder = userService.findByEmail(user.getName());
         Bid bid = new Bid(bidForm.getAmount(), bidder, job);
 

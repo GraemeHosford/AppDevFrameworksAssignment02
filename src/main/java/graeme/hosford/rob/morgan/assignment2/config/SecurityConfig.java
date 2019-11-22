@@ -1,4 +1,4 @@
-package graeme.hosford.rob.morgan.assignment2.security;
+package graeme.hosford.rob.morgan.assignment2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

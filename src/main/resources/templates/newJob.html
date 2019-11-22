@@ -2,16 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add a New Job</title>
+    <title th:text="#{newJob.pageTitle}">Add a New Job</title>
 </head>
 <body>
 
 <form class="newJob-form" method="post" th:action="@{/addJob}" th:object="${jobForm}">
-    <label th:for="*{jobName}">Job Name: <input name="jobName" th:field="*{jobName}" type="text"/></label>
-    <label th:for="*{jobDescription}">Job Description: <input name="jobDescription" th:field="*{jobDescription}"
-                                                              type="text"/></label>
-    <input type="submit" value="Submit Job"/>
+    <label th:for="*{jobName}"><span th:text="#{newJob.jobNameFormLabel}">Job Name:</span>
+        <input name="jobName" th:field="*{jobName}" type="text"/></label>
+    <label th:for="*{jobDescription}"><span th:text="#{newjob.jobDescriptionFormLabel}">Job Description:</span>
+        <input name="jobDescription" th:field="*{jobDescription}" type="text"/></label>
+    <input th:value="#{newJob.SubmitText}" type="submit"/>
 </form>
 
+<a href="/" th:text="#{common.backToJobs}">Go back to Jobs</a>
 </body>
 </html>

@@ -7,8 +7,6 @@ import java.util.Optional;
 
 abstract class BaseService<DAO extends JpaRepository<Entity, Long>, Entity> {
 
-    /* This may need to be changed to private at some point
-    but easier to leave like this for now for sake of convenience */
     protected DAO dao;
 
     BaseService(DAO dao) {
@@ -18,18 +16,6 @@ abstract class BaseService<DAO extends JpaRepository<Entity, Long>, Entity> {
     Entity getEntityById(long id) {
         Optional<Entity> entity = dao.findById(id);
         return entity.orElse(null);
-    }
-
-    void deleteEntityById(long id) {
-        dao.deleteById(id);
-    }
-
-    void deleteByEntityByObject(Entity entity) {
-        dao.delete(entity);
-    }
-
-    boolean entityExists(long id) {
-        return dao.existsById(id);
     }
 
     private void saveEntity(Entity entity) {
