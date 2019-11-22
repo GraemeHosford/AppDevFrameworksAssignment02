@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/index", "/register", "/registerUser", "/job/**")
                 .permitAll()
+                .antMatchers("/api/**").hasRole("API")
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/login").permitAll()
                 .defaultSuccessUrl("/")

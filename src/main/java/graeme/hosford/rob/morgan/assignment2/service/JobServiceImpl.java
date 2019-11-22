@@ -32,6 +32,8 @@ public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobServi
         for (Job job : activeJobs) {
             job.updateActiveState();
         }
+
+        save(activeJobs.toArray(new Job[0]));
     }
 
     @Override

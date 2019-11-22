@@ -21,6 +21,12 @@
     </tr>
 </table>
 
+<p th:unless="*{job.active}">Winning Bid was made by
+    <span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getUser().userName}">Bid Winner Name</span> who
+    bid
+    €<span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getBidAmount()}">Winning Bid Amount</span>
+</p>
+
 <form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}"
       th:if="${userid != job.userRef.userId && job.active}" th:object="${bidForm}">
     <label th:for="*{amount}">Bid Amount: <input name="bidAmount" th:field="*{amount}" type="number"/></label>

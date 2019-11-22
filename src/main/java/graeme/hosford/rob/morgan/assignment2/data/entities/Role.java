@@ -8,6 +8,7 @@ import javax.persistence.Id;
 public class Role {
 
     public static final String USER = "ROLE_USER";
+    public static final String API = "ROLE_API";
 
     @Id
     private String email;

@@ -41,13 +41,15 @@ public class DataLoader implements ApplicationRunner {
         Role role1 = new Role("graeme.hosford@mycit.ie", Role.USER);
         Role role2 = new Role("rob.morgan@mycit.ie", Role.USER);
         Role role3 = new Role("j.smith@gmail.com", Role.USER);
-        roleService.save(role1, role2, role3);
+        Role api = new Role("apiuser@mycit.ie", Role.API);
+        roleService.save(role1, role2, role3, api);
 
         User user1 = new User("Graeme Hosford", "0852336922", "graeme.hosford@mycit.ie", passEncoder.encode("SomePassword"), role1);
         User user2 = new User("Robert Morgan", "0873755491", "rob.morgan@mycit.ie", passEncoder.encode("Password1"), role2);
         User user3 = new User("John Smith", "0856671935", "j.smith@gmail.com", passEncoder.encode("JohnSmithPassword"), role3);
+        User apiUser = new User("API Consumer", "0000000000", "apiuser@mycit.ie", passEncoder.encode("password"), api);
 
-        userService.save(user1, user2, user3);
+        userService.save(user1, user2, user3, apiUser);
 
         Job job1 = new Job("Fix kitchen", "Kitchen needs fixing", LocalDate.now(), user2);
         Job job2 = new Job("Tile bathroom", "tile the bathroom", LocalDate.of(2019, 9, 23), user3);
