@@ -36,7 +36,8 @@ public class JobsController {
 
     @PostMapping("/addJob")
     public String addNewJob(@Valid JobForm jobForm, Principal user) {
-        Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(), LocalDate.now(), userService.findByEmail(user.getName()));
+        Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(),
+                LocalDate.now(), userService.findByEmail(user.getName()));
         jobService.save(job);
 
         return "redirect:/";

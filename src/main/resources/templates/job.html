@@ -17,13 +17,13 @@
 
     <tr th:each="bid : *{job.getJobBids()}">
         <td th:text="*{bid.getUser().userName}">User who made bid</td>
-        <td th:text="*{bid.getBidAmount()}">Amount they bid</td>
+        <td>€<span th:text="*{bid.getBidAmount()}"></span></td>
     </tr>
 </table>
 
 <p th:unless="*{job.active}">Winning Bid was made by
-    <span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getUser().userName}">Bid Winner Name</span> who
-    bid
+    <span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getUser().userName}">Bid Winner Name</span>
+    who bid
     €<span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getBidAmount()}">Winning Bid Amount</span>
 </p>
 

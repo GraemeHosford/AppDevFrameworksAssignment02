@@ -32,8 +32,6 @@ public class MainController {
             String email = user.getName();
             long userId = userService.findByEmail(email).getUserId();
             model.addAttribute("userid", userId);
-        } else {
-            model.addAttribute("userid", -1);
         }
 
         return "index";

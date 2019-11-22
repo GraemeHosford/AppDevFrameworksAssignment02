@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Assignment 02 Project</title>
 </head>
 <body>
-<a href="/register" th:if="*{userid == -1}">Register</a>
-<a href="/login" th:if="*{userid == -1}">Login</a>
+<a href="/register" sec:authorize="!isAuthenticated()">Register</a>
+<a href="/login" sec:authorize="!isAuthenticated()">Login</a>
+<a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
 <table>
     <tr>
         <th>ID</th>
@@ -21,19 +23,19 @@
         <td><a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:text="*{job.jobName}">Job</a></td>
         <td th:text="*{job.jobDescription}">Job Description</td>
         <td th:text="*{job.jobPublishedDate}">Published Date</td>
-        <td th:if="*{userid == -1}"><a href="/login">Sign in to make a bid</a></td>
-        <td th:if="*{job.active}" th:unless="${userid == -1}">
+        <td sec:authorize="!isAuthenticated()"><a href="/login">Sign in to make a bid</a></td>
+        <td sec:authorize="isAuthenticated()" th:if="*{job.active}">
             <p th:if="${userid eq job.userRef.userId}">You cannot bid on your own job</p>
             <a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:unless="${userid eq job.userRef.userId}">Make
                 Bid</a>
         </td>
         <td th:unless="*{job.active}">
-            <p th:unless="*{userid == -1}">Job is out of date</p>
+            <p sec:authorize="isAuthenticated()">Job is out of date</p>
         </td>
     </tr>
 </table>
 
-<a href="/newJob" th:if="*{userid != -1}">Add a new job</a>
+<a href="/newJob" sec:authorize="isAuthenticated()">Add a new job</a>
 
 </body>
 </html>
