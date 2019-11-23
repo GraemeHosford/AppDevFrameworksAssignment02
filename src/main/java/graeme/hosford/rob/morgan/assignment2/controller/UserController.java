@@ -38,7 +38,7 @@ public class UserController {
     public String addNewUser(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
                              BindingResult binding) {
         if (binding.hasErrors()) {
-            return "register";
+            return "/register";
         }
 
         Role role = new Role(registerForm.getEmail(), Role.USER);

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title th:text="${job.getJobName()}"></title>
 </head>
+<style>
+    .error {
+        color: orangered;
+        font-weight: bold;
+        font-size: larger;
+    }
+</style>
 <body>
 <span th:text="${job.getJobName()}">Job Name</span><br/>
 <span th:text="${job.getJobDescription()}">Job Description</span><br/>
@@ -35,6 +42,11 @@
     <input th:value="#{job.makeBidInput}" type="submit"/>
 </form>
 
+<!--/*@thymesVar id="bidNotLowEnough" type="boolean"*/-->
+<span class="error" th:if="${bidNotLowEnough}" th:text="#{job.bidNotLowEnough}">Bid must be lower</span>
+<!--/*@thymesVar id="negativeBid" type="boolean"*/-->
+<span class="error" th:if="${negativeBid}" th:text="#{job.negativeBidMessage}">Bid cannot be negative</span>
+<br/>
 <a href="/" th:text="#{common.backToJobs}">Go back to Jobs</a>
 </body>
 </html>

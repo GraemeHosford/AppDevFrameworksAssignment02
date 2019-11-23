@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -33,12 +34,19 @@ public class BidController {
 
     @PostMapping("/makeBid/{jobId}")
     public String makeBid(@ModelAttribute @Valid BidForm bidForm,
-                          Principal user, @PathVariable long jobId) {
+                          Principal user, @PathVariable long jobId,
+                          RedirectAttributes redirectAttributes) {
+        if (bidForm.getAmount() <= 0) {
+            redirectAttributes.addFlashAttribute("negativeBid", true);
+            return "redirect:/job/" + jobId;
+        }
+
         Job job = jobService.getJobById(jobId);
         List<Bid> jobBids = job.getJobBids();
 
         if (bidForm.getAmount() >= jobBids.get(jobBids.size() - 1).getBidAmount()) {
             /* Newly entered bid is not lower than previous lowest bid so don't save this one */
+            redirectAttributes.addFlashAttribute("bidNotLowEnough", true);
             return "redirect:/job/" + jobId;
         }
 
