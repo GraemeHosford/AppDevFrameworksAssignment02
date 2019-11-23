@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class BidController {
@@ -42,9 +41,8 @@ public class BidController {
         }
 
         Job job = jobService.getJobById(jobId);
-        List<Bid> jobBids = job.getJobBids();
 
-        if (bidForm.getAmount() >= jobBids.get(jobBids.size() - 1).getBidAmount()) {
+        if (bidForm.getAmount() >= job.getLowestBid().getBidAmount()) {
             /* Newly entered bid is not lower than previous lowest bid so don't save this one */
             redirectAttributes.addFlashAttribute("bidNotLowEnough", true);
             return "redirect:/job/" + jobId;

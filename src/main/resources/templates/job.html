@@ -30,9 +30,9 @@
 
 <p th:unless="*{job.active}">
     <span th:text="#{job.WinningBidMessagePart1}">Winning Bid was made by</span>
-    <span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getUser().userName}">Bid Winner Name</span>
+    <span th:text="*{job.getLowestBid().getUser().userName}">Bid Winner Name</span>
     <span th:text="#{job.WinningBidMessagePart2}">who bid</span>
-    €<span th:text="*{job.getJobBids().get(job.getJobBids().size() - 1).getBidAmount()}">Winning Bid Amount</span>
+    €<span th:text="*{job.getLowestBid().getBidAmount()}">Winning Bid Amount</span>
 </p>
 
 <form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}"

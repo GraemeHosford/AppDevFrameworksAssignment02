@@ -57,6 +57,10 @@ public class Job {
         this.active = DAYS.between(jobPublishedDate, LocalDate.now()) <= JOB_ACTIVE_DAYS;
     }
 
+    public Bid getLowestBid() {
+        return jobBids.get(jobBids.size() - 1);
+    }
+
     public long getJobId() {
         return jobId;
     }
