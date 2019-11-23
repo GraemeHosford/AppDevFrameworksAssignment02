@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{register.pageTitle}">Register</title>
+    <title th:text="#{common.register}">Register</title>
 </head>
 <style>
-    .span {
+    .error {
         color: orangered;
         font-weight: bold;
         font-size: larger;
@@ -14,18 +14,18 @@
 <body>
 
 <form class="register-form" method="post" th:action="@{/registerUser}" th:object="${registerForm}">
-    <label th:for="*{email}"><span th:text="#{register.emailFormLabel}">Email:</span>
+    <label th:for="*{email}"><span th:text="#{common.emailFormLabel}">Email:</span>
         <input name="email" th:field="*{email}" type="email"/></label>
-    <span class="span" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Error</span>
-    <label th:for="*{password}"><span th:text="#{register.passwordFormLabel}">Password:</span>
+    <span class="error" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Error</span>
+    <label th:for="*{password}"><span th:text="#{common.passwordFormLabel}">Password:</span>
         <input name="password" th:field="*{password}" type="password"/></label>
-    <span class="span" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Error</span>
+    <span class="error" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Error</span>
     <label th:for="*{name}"><span th:text="#{register.nameFormLabel}">Name:</span>
         <input name="name" th:field="*{name}" type="text"/></label>
-    <span class="span" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Error</span>
+    <span class="error" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Error</span>
     <label th:for="*{phone}"><span th:text="#{register.phoneFormLabel}">Phone:</span>
         <input name="phone" th:field="*{phone}" type="number"/></label>
-    <span class="span" th:errors="*{phone}" th:if="${#fields.hasErrors('phone')}">Error</span>
+    <span class="error" th:errors="*{phone}" th:if="${#fields.hasErrors('phone')}">Error</span>
     <input th:value="#{register.signUp}" type="submit"/>
 </form>
 

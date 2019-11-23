@@ -6,7 +6,7 @@
     <title th:text="#{index.pageTitle}">Assignment 02 Project</title>
 </head>
 <body>
-<a href="/register" sec:authorize="!isAuthenticated()" th:text="#{index.register}">Register</a>
+<a href="/register" sec:authorize="!isAuthenticated()" th:text="#{common.register}">Register</a>
 <a href="/login" sec:authorize="!isAuthenticated()" th:text="#{index.login}">Login</a>
 <a href="/logout" sec:authorize="isAuthenticated()" th:text="#{index.logout}">Logout</a>
 <a href="/?lang=fr" th:text="#{index.switchFrench}">Switch to French</a>
