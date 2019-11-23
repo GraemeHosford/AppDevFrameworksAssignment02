@@ -8,7 +8,9 @@ import graeme.hosford.rob.morgan.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -35,7 +37,13 @@ public class JobsController {
     }
 
     @PostMapping("/addJob")
-    public String addNewJob(@Valid JobForm jobForm, Principal user) {
+    public String addNewJob(@Valid @ModelAttribute("jobForm") JobForm jobForm,
+                            BindingResult binding,
+                            Principal user) {
+        if (binding.hasErrors()) {
+            return "/newJob";
+        }
+
         Job job = new Job(jobForm.getJobName(), jobForm.getJobDescription(),
                 LocalDate.now(), userService.findByEmail(user.getName()));
         jobService.save(job);

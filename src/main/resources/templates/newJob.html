@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <title th:text="#{newJob.pageTitle}">Add a New Job</title>
 </head>
+<style>
+    .error {
+        color: orangered;
+        font-weight: bold;
+        font-size: larger;
+    }
+</style>
 <body>
 
 <form class="newJob-form" method="post" th:action="@{/addJob}" th:object="${jobForm}">
     <label th:for="*{jobName}"><span th:text="#{newJob.jobNameFormLabel}">Job Name:</span>
         <input name="jobName" th:field="*{jobName}" type="text"/></label>
+    <span class="error" th:errors="*{jobName}" th:if="${#fields.hasErrors('jobName')}">Error</span>
     <label th:for="*{jobDescription}"><span th:text="#{newJob.jobDescriptionFormLabel}">Job Description:</span>
         <input name="jobDescription" th:field="*{jobDescription}" type="text"/></label>
+    <span class="error" th:errors="*{jobDescription}" th:if="${#fields.hasErrors('jobDescription')}">Error</span>
     <input th:value="#{newJob.SubmitText}" type="submit"/>
 </form>
 
