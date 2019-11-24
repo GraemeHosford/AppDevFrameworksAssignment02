@@ -5,6 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Base service class for delegating some common functionality.
+ *
+ * @param <DAO>    A DAO to use for database access
+ * @param <Entity> The entity representing the database table
+ */
 abstract class BaseService<DAO extends JpaRepository<Entity, Long>, Entity> {
 
     protected DAO dao;

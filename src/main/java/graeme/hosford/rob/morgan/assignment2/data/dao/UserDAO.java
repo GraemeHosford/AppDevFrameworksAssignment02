@@ -6,15 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface UserDAO extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.useremail = :email AND u.userpassword = :password")
-    Optional<User> getUserAccount(@Param("email") String email, @Param("password") String password);
-
-    @Query("SELECT u FROM User u WHERE u.useremail = :email")
+    @Query("SELECT u FROM User u WHERE u.email = :email")
     User getUserFromEmail(@Param("email") String email);
 
 }

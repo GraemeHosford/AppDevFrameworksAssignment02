@@ -2,6 +2,7 @@ package graeme.hosford.rob.morgan.assignment2.controller.form;
 
 public class BidForm {
 
+    /* Error handling not included here. Done using flash attributes in BidController */
     private double amount;
 
     private long bidMaker;

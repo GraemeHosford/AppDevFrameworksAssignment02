@@ -65,6 +65,7 @@ public class JobsController {
             long userId = userService.findByEmail(email).getUserId();
             model.addAttribute("userid", userId);
         } else {
+            /* To handle when nobody signed in as job page is open to everyone */
             model.addAttribute("userid", -1);
         }
 

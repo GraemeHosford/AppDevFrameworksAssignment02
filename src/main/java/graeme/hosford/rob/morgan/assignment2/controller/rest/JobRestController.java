@@ -20,7 +20,7 @@ public class JobRestController {
         this.jobService = jobService;
     }
 
-    @GetMapping("activejobs")
+    @GetMapping("/activejobs")
     public List<Job> activeJobs() {
         return jobService.getActiveJobs();
     }

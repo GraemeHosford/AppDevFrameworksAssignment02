@@ -21,7 +21,7 @@ public class UsersBidController {
         this.bidDAO = bidDAO;
     }
 
-    @GetMapping("userbid/{id}")
+    @GetMapping("/userbid/{id}")
     public List<Bid> getUserBids(@PathVariable("id") long userId) {
         return bidDAO.getUserBids(userId);
     }

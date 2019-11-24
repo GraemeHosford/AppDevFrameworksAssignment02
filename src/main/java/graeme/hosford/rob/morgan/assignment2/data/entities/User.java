@@ -14,20 +14,20 @@ public class User {
     private long userId;
 
     @Column
-    private String userName;
+    private String name;
 
     @Column
-    private String userPhone;
+    private String phone;
 
     @Column
     @Email
-    private String useremail;
+    private String email;
 
     @Column
-    private String userpassword;
+    private String password;
 
     @Column
-    private boolean userenabled;
+    private boolean enabled;
 
     @OneToOne
     @JoinColumn(name = "roleemail", nullable = false)
@@ -42,13 +42,13 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String userPhone, String userEmail, String userPassword, Role userRole) {
-        this.userName = userName;
-        this.userPhone = userPhone;
-        this.useremail = userEmail;
-        this.userpassword = userPassword;
-        this.userenabled = true;
-        this.role = userRole;
+    public User(String name, String phone, String email, String password, Role role) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.enabled = true;
+        this.role = role;
     }
 
     public long getUserId() {
@@ -59,20 +59,20 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Job> getUserJobs() {
@@ -99,27 +99,27 @@ public class User {
         this.role = role;
     }
 
-    public String getUseremail() {
-        return useremail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUseremail(String useremail) {
-        this.useremail = useremail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserpassword() {
-        return userpassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public boolean isUserenabled() {
-        return userenabled;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setUserenabled(boolean userenabled) {
-        this.userenabled = userenabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

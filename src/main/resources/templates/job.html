@@ -23,14 +23,14 @@
     </tr>
 
     <tr th:each="bid : *{job.getJobBids()}">
-        <td th:text="*{bid.getUser().userName}">User who made bid</td>
+        <td th:text="*{bid.getUser().name}">User who made bid</td>
         <td>€<span th:text="*{bid.getBidAmount()}"></span></td>
     </tr>
 </table>
 
 <p th:unless="*{job.active}">
     <span th:text="#{job.WinningBidMessagePart1}">Winning Bid was made by</span>
-    <span th:text="*{job.getLowestBid().getUser().userName}">Bid Winner Name</span>
+    <span th:text="*{job.getLowestBid().getUser().name}">Bid Winner Name</span>
     <span th:text="#{job.WinningBidMessagePart2}">who bid</span>
     €<span th:text="*{job.getLowestBid().getBidAmount()}">Winning Bid Amount</span>
 </p>

@@ -58,6 +58,7 @@ public class Job {
     }
 
     public Bid getLowestBid() {
+        /* Only bids lower than the last can be entered, therefore the lowest is always the last in the list */
         return jobBids.get(jobBids.size() - 1);
     }
 

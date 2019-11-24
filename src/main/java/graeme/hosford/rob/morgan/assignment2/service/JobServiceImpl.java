@@ -33,6 +33,7 @@ public class JobServiceImpl extends BaseService<JobDAO, Job> implements JobServi
             job.updateActiveState();
         }
 
+        /* Save all jobs again to update their status in database */
         save(activeJobs.toArray(new Job[0]));
     }
 
