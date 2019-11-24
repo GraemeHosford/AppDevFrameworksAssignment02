@@ -37,4 +37,9 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/error")
+    public String error() {
+        return "error";
+    }
+
 }
