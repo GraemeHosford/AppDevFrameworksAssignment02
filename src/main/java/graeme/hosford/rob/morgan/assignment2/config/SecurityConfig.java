@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .usernameParameter("email")
                 .and().httpBasic()
+                .and().exceptionHandling().accessDeniedPage("/403")
                 .and().logout().logoutSuccessUrl("/").permitAll();
 
         http.csrf().disable();
