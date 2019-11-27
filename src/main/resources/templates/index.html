@@ -4,40 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{index.pageTitle}">Assignment 02 Project</title>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid lightblue;
+            background-color: lightblue;
+            border-radius: 1em;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: #666;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        li a.active {
+            color: white;
+            background-color: #4CAF50;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr {
+            background-color: #343030;
+            color: aliceblue;
+        }
+
+        a {
+            color: aliceblue;
+        }
+
+        th {
+            background-color: lightblue;
+            color: #666666;
+            font-weight: lighter;
+        }
+
+        .tablediv {
+            padding-top: 4em;
+        }
+
+        .hoverlink:hover {
+            color: #4CAF50;
+        }
+
+        body {
+            background-color: #343030;
+        }
+
+        .newJob {
+            padding-top: 2em;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+    </style>
 </head>
 <body>
-<a href="/register" sec:authorize="!isAuthenticated()" th:text="#{common.register}">Register</a>
-<a href="/login" sec:authorize="!isAuthenticated()" th:text="#{index.login}">Login</a>
-<a href="/logout" sec:authorize="isAuthenticated()" th:text="#{index.logout}">Logout</a>
-<a href="/?lang=fr" th:text="#{index.switchFrench}">Switch to French</a>
-<a href="/?lang=en" th:text="#{index.switchEnglish}">Switch to English</a>
-<table>
-    <tr>
-        <th th:text="#{index.jobNameHeader}">Job</th>
-        <th th:text="#{index.jobDescriptionHeader}">Description</th>
-        <th th:text="#{index.jobPublishedDateHeader}">Published Date</th>
-        <th th:text="#{index.makeBidHeader}">Bid</th>
-    </tr>
+<ul>
+    <li><a href="/register" sec:authorize="!isAuthenticated()" th:text="#{common.register}">Register</a></li>
+    <li><a href="/login" sec:authorize="!isAuthenticated()" th:text="#{index.login}">Login</a></li>
+    <li><a href="/logout" sec:authorize="isAuthenticated()" th:text="#{index.logout}">Logout</a></li>
+    <li><a href="/?lang=fr" th:text="#{index.switchFrench}">Switch to French</a></li>
+    <li><a href="/?lang=en" th:text="#{index.switchEnglish}">Switch to English</a></li>
+</ul>
+<div class="tablediv">
+    <table align="center">
+        <tr>
+            <th th:text="#{index.jobNameHeader}">Job</th>
+            <th th:text="#{index.jobDescriptionHeader}">Description</th>
+            <th th:text="#{index.jobPublishedDateHeader}">Published Date</th>
+            <th th:text="#{index.makeBidHeader}">Bid</th>
+        </tr>
 
-    <tr th:each="job : ${jobList}">
-        <td><a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:text="*{job.jobName}">Job</a></td>
-        <td th:text="*{job.jobDescription}">Job Description</td>
-        <td th:text="*{job.jobPublishedDate}">Published Date</td>
-        <td sec:authorize="!isAuthenticated()"><a href="/login" th:text="#{index.signInBidMessage}">Sign in to make a
-            bid</a></td>
-        <td sec:authorize="isAuthenticated()" th:if="*{job.active}">
-            <p th:if="${userid eq job.userRef.userId}" th:text="#{index.ownJobMessage}">You cannot bid on your own
-                job</p>
-            <a th:href="@{/job/{jobId}(jobId=${job.jobId})}"
-               th:text="#{index.makeBid}" th:unless="${userid eq job.userRef.userId}">Make Bid</a>
-        </td>
-        <td th:unless="*{job.active}">
-            <p sec:authorize="isAuthenticated()" th:text="#{index.outOfDate}">Job is out of date</p>
-        </td>
-    </tr>
-</table>
-
-<a href="/newJob" sec:authorize="isAuthenticated()" th:text="#{index.addNewJob}">Add a new job</a>
+        <tr th:each="job : ${jobList}">
+            <td><a th:href="@{/job/{jobId}(jobId=${job.jobId})}" th:text="*{job.jobName}" class="hoverlink">Job</a></td>
+            <td th:text="*{job.jobDescription}">Job Description</td>
+            <td th:text="*{job.jobPublishedDate}">Published Date</td>
+            <td sec:authorize="!isAuthenticated()"><a href="/login" th:text="#{index.signInBidMessage}"
+                                                      class="hoverlink">Sign in to make a
+                bid</a></td>
+            <td sec:authorize="isAuthenticated()" th:if="*{job.active}">
+                <p style="color: orange" th:if="${userid eq job.userRef.userId}" th:text="#{index.ownJobMessage}">You
+                    cannot bid on your own
+                    job</p>
+                <a th:href="@{/job/{jobId}(jobId=${job.jobId})}"
+                   th:text="#{index.makeBid}" th:unless="${userid eq job.userRef.userId}" class="hoverlink">Make Bid</a>
+            </td>
+            <td th:unless="*{job.active}">
+                <p style="color: orange" sec:authorize="isAuthenticated()" th:text="#{index.outOfDate}">Job is out of
+                    date</p>
+            </td>
+        </tr>
+    </table>
+    <div class="newJob">
+        <a href="/newJob" sec:authorize="isAuthenticated()" th:text="#{index.addNewJob}" class="hoverlink">Add a new job</a>
+    </div>
+</div>
 
 </body>
 </html>

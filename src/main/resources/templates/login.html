@@ -8,7 +8,6 @@
         body {
             background-color: #343030;
         }
-
         .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             transition: 0.3s;
@@ -18,16 +17,13 @@
             top: 20%;
             left: 40%;
         }
-
         input {
             align-self: center;
             border-radius: 4px;
         }
-
         .card:hover {
             box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
-
         .container {
             display: flex;
             justify-content: center;
@@ -37,12 +33,16 @@
             padding-bottom: 2em;
             background-color: slategrey;
             border-radius: 55px;
-
         }
-
         label {
+            padding-top: 0.5em;
             display: block;
             color: aliceblue;
+            align-self: center;
+            text-align: center;
+        }
+        span{
+            display: block;
             align-self: center;
             text-align: center;
         }
@@ -53,16 +53,20 @@
             justify-content: center;
             flex-direction: row;
         }
-
-        .icon {
+        .Header{
             padding-top: 1em;
             display: flex;
             justify-content: center;
             flex-direction: row;
+            color: aliceblue;
         }
-
+        .icon {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
         .error {
-            color: orangered;
+            color: orange;
             font-weight: bold;
             font-size: larger;
         }
@@ -72,12 +76,16 @@
 <div class="card">
     <div class="container">
         <form class="login-form" method="post" th:action="@{/login}">
+            <div class="Header">
             <h4 th:text="#{login.pageTitle}">Please Login</h4>
+            </div>
             <div class="icon">
                 <i class="fas fa-id-badge" style="font-size:200px;color:lightblue;text-shadow:2px 2px 4px #000000;"></i>
             </div>
+            <div class="forms">
             <label><span th:text="#{common.emailFormLabel}">Email:</span> <input name="email" type="email"/></label>
             <label><span th:text="#{common.passwordFormLabel}">Password:</span> <input name="password" type="password"/></label>
+            </div>
             <div class="sub">
                 <input id="subBtn" th:value="#{login.signIn}" type="submit"/>
             </div>
