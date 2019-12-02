@@ -41,6 +41,7 @@
 
         table {
             border-collapse: collapse;
+            align-self: center;
         }
 
         th, td {
@@ -65,6 +66,8 @@
 
         .tablediv {
             padding-top: 4em;
+            display: flex;
+            justify-content: center;
         }
 
         .hoverlink:hover {
@@ -92,7 +95,7 @@
     <li><a href="/?lang=en" th:text="#{index.switchEnglish}">Switch to English</a></li>
 </ul>
 <div class="tablediv">
-    <table align="center">
+    <table>
         <tr>
             <th th:text="#{index.jobNameHeader}">Job</th>
             <th th:text="#{index.jobDescriptionHeader}">Description</th>
@@ -120,10 +123,11 @@
             </td>
         </tr>
     </table>
-    <div class="newJob">
-        <a href="/newJob" sec:authorize="isAuthenticated()" th:text="#{index.addNewJob}" class="hoverlink">Add a new job</a>
-    </div>
 </div>
+<div class="newJob">
+    <a href="/newJob" sec:authorize="isAuthenticated()" th:text="#{index.addNewJob}" class="hoverlink">Add a new job</a>
+</div>
+
 
 </body>
 </html>

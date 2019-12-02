@@ -6,47 +6,133 @@
 </head>
 <style>
     .error {
-        color: orangered;
-        font-weight: bold;
-        font-size: larger;
+        color: orange;
     }
+    table {
+        border-collapse: collapse;
+        align-self: center;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr {
+        background-color: #343030;
+        color: aliceblue;
+    }
+
+    a{
+        color: white;
+    }
+    a:hover {
+        color:#4CAF50;
+
+    }
+    th {
+        background-color: lightblue;
+        color: #666666;
+        font-weight: lighter;
+    }
+
+    .tablediv {
+        padding-top: 4em;
+        display: flex;
+        justify-content: center;
+    }
+
+    body {
+        background-color: #343030;
+    }
+    .sub{
+        padding-top: 0.5em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .bidField{
+        padding-top: 0.5em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        border-radius: 4px;
+    }
+    .bidSpan{
+        padding-top: 2em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        border-radius: 4px;
+    }
+    .warn{
+        padding-top: 2em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+    }
+    .win{
+        padding-top: 2em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        color: #4CAF50;
+    }
+
+
 </style>
 <body>
-<span th:text="${job.getJobName()}">Job Name</span><br/>
-<span th:text="${job.getJobDescription()}">Job Description</span><br/>
-<span th:text="${job.getJobPublishedDate()}">Publish Date</span><br/>
+<a href="/" th:text="#{common.backToJobs}">Go back to Jobs</a>
+<div class="tablediv">
+    <table>
+        <tr>
+            <th>Job Name</th>
+            <th>Job Description</th>
+            <th>Publish Date</th>
+        </tr>
+        <tr>
+            <td><span th:text="${job.getJobName()}">Job Name</span></td>
+            <td><span th:text="${job.getJobDescription()}">Job Description</span></td>
+            <td><span th:text="${job.getJobPublishedDate()}">Publish Date</span></td>
+        </tr>
+    </table>
+</div>
+<div class="tablediv">
+    <table>
+        <tr>
+            <th th:text="#{job.user}">User</th>
+            <th th:text="#{job.bidAmount}">Bid Amount</th>
+        </tr>
 
-<table>
-    <tr>
-        <th th:text="#{job.user}">User</th>
-        <th th:text="#{job.bidAmount}">Bid Amount</th>
-    </tr>
-
-    <tr th:each="bid : *{job.getJobBids()}">
-        <td th:text="*{bid.getUser().name}">User who made bid</td>
-        <td>€<span th:text="*{bid.getBidAmount()}"></span></td>
-    </tr>
-</table>
-
+        <tr th:each="bid : *{job.getJobBids()}">
+            <td th:text="*{bid.getUser().name}">User who made bid</td>
+            <td>€<span th:text="*{bid.getBidAmount()}"></span></td>
+        </tr>
+    </table>
+</div>
+<div class="win">
 <p th:unless="*{job.active}">
     <span th:text="#{job.WinningBidMessagePart1}">Winning Bid was made by</span>
     <span th:text="*{job.getLowestBid().getUser().name}">Bid Winner Name</span>
     <span th:text="#{job.WinningBidMessagePart2}">who bid</span>
     €<span th:text="*{job.getLowestBid().getBidAmount()}">Winning Bid Amount</span>
 </p>
-
+</div>
 <form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}"
       th:if="${userid != job.userRef.userId && job.active}" th:object="${bidForm}">
-    <label th:for="*{amount}"><span th:text="#{job.bidAmountFormLabel}">Bid Amount:</span>
-        <input name="bidAmount" step="0.01" th:field="*{amount}" type="number"/></label>
-    <input th:value="#{job.makeBidInput}" type="submit"/>
+    <label th:for="*{amount}"><div class="bidSpan"><span style="color: aliceblue" th:text="#{job.bidAmountFormLabel}">Bid Amount:</span></div>
+        <div class="bidField"><input  name="bidAmount" step="0.01" th:field="*{amount}" type="number"/></div></label>
+    <div class="sub">
+        <input th:value="#{job.makeBidInput}" type="submit"/>
+    </div>
 </form>
-
+<div class="warn">
 <!--/*@thymesVar id="bidNotLowEnough" type="boolean"*/-->
 <span class="error" th:if="${bidNotLowEnough}" th:text="#{job.bidNotLowEnough}">Bid must be lower</span>
 <!--/*@thymesVar id="negativeBid" type="boolean"*/-->
 <span class="error" th:if="${negativeBid}" th:text="#{job.negativeBidMessage}">Bid cannot be negative</span>
-<br/>
-<a href="/" th:text="#{common.backToJobs}">Go back to Jobs</a>
+</div>
 </body>
 </html>

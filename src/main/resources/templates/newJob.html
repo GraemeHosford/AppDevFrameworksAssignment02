@@ -2,26 +2,113 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <title th:text="#{newJob.pageTitle}">Add a New Job</title>
 </head>
 <style>
+
+    body {
+        background-color: #343030;
+    }
+    a{
+        color: white;
+    }
+    a:hover {
+        color:#4CAF50;
+
+    }
+
+
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 20%;
+        border-radius: 55px;
+        position: absolute;
+        top: 20%;
+        left: 40%;
+    }
+
+    input {
+        align-self: center;
+        border-radius: 4px;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        top: 30%;
+        left: 45%;
+        padding-bottom: 2em;
+        background-color: slategrey;
+        border-radius: 55px;
+    }
+
+    label {
+        padding-top: 0.5em;
+        display: block;
+        color: aliceblue;
+        align-self: center;
+        text-align: center;
+    }
+
+    span{
+        display: block;
+        align-self: center;
+        text-align: center;
+    }
+
+    .sub {
+        padding-top: 1em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .Header{
+        padding-top: 1em;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        color: aliceblue;
+    }
+    .icon {
+
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+    }
     .error {
-        color: orangered;
-        font-weight: bold;
-        font-size: larger;
+        color: orange;
     }
 </style>
 <body>
-
-<form class="newJob-form" method="post" th:action="@{/addJob}" th:object="${jobForm}">
-    <label th:for="*{jobName}"><span th:text="#{newJob.jobNameFormLabel}">Job Name:</span>
-        <input name="jobName" th:field="*{jobName}" type="text"/></label>
-    <span class="error" th:errors="*{jobName}" th:if="${#fields.hasErrors('jobName')}">Error</span>
-    <label th:for="*{jobDescription}"><span th:text="#{newJob.jobDescriptionFormLabel}">Job Description:</span>
-        <input name="jobDescription" th:field="*{jobDescription}" type="text"/></label>
-    <span class="error" th:errors="*{jobDescription}" th:if="${#fields.hasErrors('jobDescription')}">Error</span>
-    <input th:value="#{newJob.SubmitText}" type="submit"/>
-</form>
+<div class="card">
+    <div class="container">
+        <form class="newJob-form" method="post" th:action="@{/addJob}" th:object="${jobForm}">
+            <div class="Header">
+                <h4>Add New Job</h4>
+            </div>
+            <div class="icon">
+                <i class="fas fa-folder-plus" style="font-size:200px;color:lightblue;text-shadow:2px 2px 4px #000000;"></i>
+            </div>
+            <label th:for="*{jobName}"><span th:text="#{newJob.jobNameFormLabel}">Job Name:</span>
+                <input name="jobName" th:field="*{jobName}" type="text"/></label>
+            <span class="error" th:errors="*{jobName}" th:if="${#fields.hasErrors('jobName')}">Error</span>
+            <label th:for="*{jobDescription}"><span th:text="#{newJob.jobDescriptionFormLabel}">Job Description:</span>
+                <input name="jobDescription" th:field="*{jobDescription}" type="text"/></label>
+            <span class="error" th:errors="*{jobDescription}" th:if="${#fields.hasErrors('jobDescription')}">Error</span>
+            <div class="sub">
+            <input th:value="#{newJob.SubmitText}" type="submit"/>
+            </div>
+        </form>
+    </div>
+</div>
 
 <a href="/" th:text="#{common.backToJobs}">Go back to Jobs</a>
 </body>
