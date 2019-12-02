@@ -90,7 +90,7 @@
     <div class="container">
         <form class="register-form" method="post" th:action="@{/registerUser}" th:object="${registerForm}">
             <div class="Header">
-                <h4>Please Register</h4>
+                <h4 th:text="#{register.cardTitle}">Please Register</h4>
             </div>
             <div class="icon">
                 <i class="fas fa-edit" style="font-size:200px;color:lightblue;text-shadow:2px 2px 4px #000000;"></i>

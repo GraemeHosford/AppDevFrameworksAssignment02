@@ -35,6 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().exceptionHandling().accessDeniedPage("/403")
                 .and().logout().logoutSuccessUrl("/").permitAll();
 
+        /* Registering purposely does not login automatically.
+         * This is to make checking login functionality more convenient without having
+         * to logout first */
+
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

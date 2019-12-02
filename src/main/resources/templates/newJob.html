@@ -92,7 +92,7 @@
     <div class="container">
         <form class="newJob-form" method="post" th:action="@{/addJob}" th:object="${jobForm}">
             <div class="Header">
-                <h4>Add New Job</h4>
+                <h4 th:text="#{newJob.pageTitle}">Add New Job</h4>
             </div>
             <div class="icon">
                 <i class="fas fa-folder-plus" style="font-size:200px;color:lightblue;text-shadow:2px 2px 4px #000000;"></i>

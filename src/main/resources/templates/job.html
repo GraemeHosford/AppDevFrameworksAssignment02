@@ -8,6 +8,7 @@
     .error {
         color: orange;
     }
+
     table {
         border-collapse: collapse;
         align-self: center;
@@ -23,13 +24,15 @@
         color: aliceblue;
     }
 
-    a{
+    a {
         color: white;
     }
+
     a:hover {
-        color:#4CAF50;
+        color: #4CAF50;
 
     }
+
     th {
         background-color: lightblue;
         color: #666666;
@@ -45,35 +48,39 @@
     body {
         background-color: #343030;
     }
-    .sub{
+
+    .sub {
         padding-top: 0.5em;
         display: flex;
         justify-content: center;
         flex-direction: row;
     }
 
-    .bidField{
+    .bidField {
         padding-top: 0.5em;
         display: flex;
         justify-content: center;
         flex-direction: row;
         border-radius: 4px;
     }
-    .bidSpan{
+
+    .bidSpan {
         padding-top: 2em;
         display: flex;
         justify-content: center;
         flex-direction: row;
         border-radius: 4px;
     }
-    .warn{
+
+    .warn {
         padding-top: 2em;
         display: flex;
         justify-content: center;
         flex-direction: row;
 
     }
-    .win{
+
+    .win {
         padding-top: 2em;
         display: flex;
         justify-content: center;
@@ -88,9 +95,9 @@
 <div class="tablediv">
     <table>
         <tr>
-            <th>Job Name</th>
-            <th>Job Description</th>
-            <th>Publish Date</th>
+            <th th:text="#{job.jobName}">Job Name</th>
+            <th th:text="#{job.jobDescription}">Job Description</th>
+            <th th:text="#{job.publishDate}">Publish Date</th>
         </tr>
         <tr>
             <td><span th:text="${job.getJobName()}">Job Name</span></td>
@@ -113,26 +120,29 @@
     </table>
 </div>
 <div class="win">
-<p th:unless="*{job.active}">
-    <span th:text="#{job.WinningBidMessagePart1}">Winning Bid was made by</span>
-    <span th:text="*{job.getLowestBid().getUser().name}">Bid Winner Name</span>
-    <span th:text="#{job.WinningBidMessagePart2}">who bid</span>
-    €<span th:text="*{job.getLowestBid().getBidAmount()}">Winning Bid Amount</span>
-</p>
+    <p th:unless="*{job.active}">
+        <span th:text="#{job.WinningBidMessagePart1}">Winning Bid was made by</span>
+        <span th:text="*{job.getLowestBid().getUser().name}">Bid Winner Name</span>
+        <span th:text="#{job.WinningBidMessagePart2}">who bid</span>
+        €<span th:text="*{job.getLowestBid().getBidAmount()}">Winning Bid Amount</span>
+    </p>
 </div>
 <form class="job-form" method="post" th:action="@{/makeBid/{jobId}(jobId=${job.jobId})}"
       th:if="${userid != job.userRef.userId && job.active}" th:object="${bidForm}">
-    <label th:for="*{amount}"><div class="bidSpan"><span style="color: aliceblue" th:text="#{job.bidAmountFormLabel}">Bid Amount:</span></div>
-        <div class="bidField"><input  name="bidAmount" step="0.01" th:field="*{amount}" type="number"/></div></label>
+    <label th:for="*{amount}">
+        <!-- Can only keep elements aligned center with divs here -->
+        <div class="bidSpan"><span style="color: aliceblue" th:text="#{job.bidAmountFormLabel}">Bid Amount:</span></div>
+        <div class="bidField"><input name="bidAmount" step="0.01" th:field="*{amount}" type="number"/></div>
+    </label>
     <div class="sub">
         <input th:value="#{job.makeBidInput}" type="submit"/>
     </div>
 </form>
 <div class="warn">
-<!--/*@thymesVar id="bidNotLowEnough" type="boolean"*/-->
-<span class="error" th:if="${bidNotLowEnough}" th:text="#{job.bidNotLowEnough}">Bid must be lower</span>
-<!--/*@thymesVar id="negativeBid" type="boolean"*/-->
-<span class="error" th:if="${negativeBid}" th:text="#{job.negativeBidMessage}">Bid cannot be negative</span>
+    <!--/*@thymesVar id="bidNotLowEnough" type="boolean"*/-->
+    <span class="error" th:if="${bidNotLowEnough}" th:text="#{job.bidNotLowEnough}">Bid must be lower</span>
+    <!--/*@thymesVar id="negativeBid" type="boolean"*/-->
+    <span class="error" th:if="${negativeBid}" th:text="#{job.negativeBidMessage}">Bid cannot be negative</span>
 </div>
 </body>
 </html>
